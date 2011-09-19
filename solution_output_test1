@@ -1,0 +1,55 @@
+------------------
+Hospital: KU Hospital
+------------------
+List of doctors: 
+Doctor: John Smith
+  List of patients: 
+  - Tony Seinfield, 80 - arthritis
+
+Doctor: Jane Doe
+  List of patients: 
+  - Diana Aldana, 4 - flu
+  - Bo Lava, 48 - asthma
+
+Doctor: Paul Newman
+  List of patients: 
+  - Oscar Lopez, 30 - cough
+  - Ben Mitchell, 23 - cold
+  - Gloria Zubizarreta, 15 - headache
+
+------------------
+Hospital: KU Hospital
+------------------
+List of doctors: 
+Doctor: John Smith
+  List of patients: 
+  - Tony Seinfield, 80 - arthritis
+
+Doctor: Jane Doe
+  List of patients: 
+  - Diana Aldana, 4 - flu
+  - Bo Lava, 48 - asthma
+
+Doctor: Paul Newman
+  List of patients: 
+  - Ben Mitchell, 23 - cold
+  - Gloria Zubizarreta, 15 - headache
+
+------------------
+Hospital: KU Hospital
+------------------
+List of doctors: 
+Doctor: Jane Doe
+  List of patients: 
+  - Diana Aldana, 4 - flu
+  - Bo Lava, 48 - asthma
+
+Doctor: Paul Newman
+  List of patients: 
+  - Ben Mitchell, 23 - cold
+  - Gloria Zubizarreta, 15 - headache
+
+Doctor: Jane Doe
+  List of patients: 
+  - Diana Aldana, 4 - flu
+  - Bo Lava, 48 - asthma

@@ -1,0 +1,16 @@
+hire John Smith
+hire Jane Doe
+hire Paul Newman
+add-patient Paul Newman Ben Mitchell 23 cold
+add-patient Paul Newman Oscar Lopez 30 cough
+add-patient Paul Newman Gloria Zubizarreta 15 headache
+add-patient Jane Doe Bo Lava 48 asthma
+add-patient Jane Doe Diana Aldana 4 flu
+add-patient John Smith Tony Seinfield 80 arthritis
+print-hospital
+remove-patient Paul Newman Oscar Lopez
+print-hospital
+fire John Smith
+print-hospital
+print-doctor Jane Doe
+print-patient Paul Newman Ben Mitchell
