@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <assert.h>
+#include <cassert>
 
 using namespace std;
 
@@ -104,7 +104,7 @@ int Double_list::get_length () const
 }
 
 
-void Double_list::insert ( int index, list_item_type new_item )
+bool Double_list::insert ( int index, list_item_type new_item )
 {
     int new_length = get_length() + 1;
     if (( index < 1 ) || ( index > new_length )) {
@@ -144,9 +144,32 @@ void Double_list::insert ( int index, list_item_type new_item )
                 head = new_ptr;
             /* 
              * Now we get to see what happens if there are elements
-             * in the list
+             * in the list. cur will point directly to the item located
+             * behind the index. 
              */
             } else {
+                /* three steps, first set new_ptr's next to the current item,
+                 * this way no information is destroyed but a reference is produced
+                 * second, set the next pointer of the item  previously preceding cur
+                 * to point to the new item
+                 * third set curs previous pointer to the new item.
+                 */
+                Double_node *cur = find ( index );
+                new_ptr->next = cur;
+                cur->prev->next = new_ptr;
+                cur->prev = new_ptr;
+            }
+        }
+    }
+}
+
+void Double_list::remove ( int index )
+{
+    if (( index < 1 ) || ( index > new_length )) {
+        throw list_index_out_of_range_exception(
+                "List Index Out of Range Exception: the index you provided is out of range");
+    } else {
+
 
 
 
