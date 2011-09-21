@@ -21,7 +21,7 @@ class Double_list
     /* checks if the node is empty */
     bool is_empty () const;
 
-    /* returns the length, and cannot modify anything */
+    /* returns the length */
     int get_length () const;
 
     /* 
@@ -65,8 +65,19 @@ class Double_list
       Double_node       *prev;
       Double_node       *next;
     };
+    
+    /* 
+     * the total size of the list
+     * and and a pointer to the node
+     */
     int size;
     Double_node   *head;
+    
+    /* 
+     * The tail-node could speed adding new objects to the end of list
+     * however, it could also take extra time implementing
+     */
+    Double_node   *tail;
     Double_node   *find( int index ) const;
-}
+};
 

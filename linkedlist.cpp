@@ -45,6 +45,7 @@ Double_list::d_list ( const d_list& a_list ) : size(a_list.size)
     Double_node *new_ptr = head; 
     Double_node *orig_ptr = a_list.head->next;
     Double_node *tmp_ptr;
+
     for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
       new_ptr->next = new Double_node;
       assert ( new_ptr->next != NULL );
@@ -60,7 +61,9 @@ Double_list::d_list ( const d_list& a_list ) : size(a_list.size)
      * list.
      */
     new_ptr->next = NULL;
+    tmp_ptr = NULL;
     tail = new_ptr;
   }
 }
 
+Double_node::~d_list ( ):
