@@ -1,1 +1,8 @@
-write func spec
+
+write the header files for the two exceptions
+write the implementation file for the doubly linked list.
+
+write the header file for the hospital, doctor, patient, 
+    -> don't forget you can also overload the << operator
+        to provide significant outout for the doctor, patient
+        and hospital objects, check the lab2 for examples.
