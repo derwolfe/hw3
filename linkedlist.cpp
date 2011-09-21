@@ -4,18 +4,21 @@
 using namespace std;
 
 #include "linkedlist.h"
-
-/*
+/* 
+ * The indexing for this linkedlist implementation will start at ZERO!
+ */
+ 
+/* 
  * default constructor that creates a list of no length
  * pointing the head pointer to null
  */
-Double_list::d_list ():
+Double_list::d_list (): 
 {
   size ( 0 );
   head ( NULL );
 }
 
-Double_list::d_list ( const d_list& a_list ) : size(a_list.size)
+void Double_list::d_list ( const d_list& a_list ) : size(a_list.size) 
 {
   if ( a_list.head == NULL ) {
     head = NULL;
@@ -63,4 +66,87 @@ Double_list::d_list ( const d_list& a_list ) : size(a_list.size)
     tail = new_ptr;
   }
 }
+
+/* 
+ * An OBJECT desctructor  
+ * this will remove the first element of the loop on EACH 
+ * iteration of the loop. Once, the list is empty it will 
+ * stop.
+ */
+void Double_list::~d_list () 
+{
+    while ( !is_empty ) {
+       remove ( 0 );
+    }    
+}
+
+/* 
+ * Checks if the list's size = 0 and makes sure that head 
+ * and tail are pointing to null. An assert statement
+ * may not be the best way to check that head & tail are set to NULL
+ */
+bool Double_list::is_empty () const 
+{
+    if ( size == 0 ) {
+        assert ( head == NULL );
+ /*       assert ( tail == NULL ); --removed from header file*/
+        return true;
+    }
+    return false;
+}
+
+/*
+ * Accesses the private size variable
+ */
+int Double_list::get_length () const
+{
+    return size;
+}
+
+
+void Double_list::insert ( int index, list_item_type new_item )
+{
+    int new_length = get_length() + 1;
+    if (( index < 1 ) || ( index > new_length )) {
+        throw list_index_out_of_range_exception(
+                "List Index Out of Range Exception: the index you provided is out of range");
+    } else {
+        /* 
+         * Normal execution of the subroutine, initialiases a new_ptr for the NEW
+         * double node
+         */
+        Double_node *new_ptr = new Double_node;
+        if ( new_ptr == NULL ) {
+            throw list_exception("No more memory for new node");
+        } else {
+            size = new_length;
+            new_ptr->item = new_item;
+            /* 
+             * Insert to the head of the list, set the negative values NULL as they
+             * are out of bound/
+             */
+            if ( index == 0 ) {
+                new_ptr->next = head;
+                new_ptr->prev = NULL;
+                /*
+                 * If the insertion is occuring in a list that isn't empty
+                 * do the following, the following initializes the 2nd element
+                 * in the list
+                 */
+                if ( head != NULL ) {
+                /* 
+                 *  based on the order of the dereferences, 
+                 *  (new_ptr->next)->prev sets the next
+                 *  element's 'prev' pointer to the newly minted node
+                 */
+                    new_ptr->next->prev = new_ptr;
+                }
+                head = new_ptr;
+            /* 
+             * Now we get to see what happens if there are elements
+             * in the list
+             */
+            } else {
+
+
 
