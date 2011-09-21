@@ -53,6 +53,12 @@ Double_list::d_list ( const d_list& a_list ) : size(a_list.size)
       new_ptr->prev = tmp_ptr;
       new_ptr->item = orig_ptr->item;
     }
+    /* 
+     * now that the loop has finished, the last element's 
+     * next pointer needs to point to null
+     * the tail pointer should point to the last element on the 
+     * list.
+     */
     new_ptr->next = NULL;
     tail = new_ptr;
   }
