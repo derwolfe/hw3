@@ -149,7 +149,7 @@ bool Double_list::insert ( int index, list_item_type new_item )
          *  (new_ptr->next)->prev sets the next
          *  element's 'prev' pointer to the newly minted node
          */
-            new_ptr->next->prev = new_ptr;
+          new_ptr->next->prev = new_ptr;
         }
         head = new_ptr;
     /* 
