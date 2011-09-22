@@ -11,7 +11,7 @@ using namespace std;
 /* 
  * default constructor that creates a list of no length
  * pointing the head pointer to null
- * 1. Do you need to make the pointers point to an instance of a list? Yes.
+ * 1. Do you need to make the pointers point to a new instance of a list? Yes.
  */
 Double_list::d_list (): 
 {
@@ -24,6 +24,7 @@ void Double_list::d_list ( const d_list& a_list ) : size( a_list.size )
 {
   if ( a_list.head == NULL ) {
     head = NULL;
+    tail = NULL
   }
   /* 
    * checks to see if list is empty, if so, set the head to null
@@ -40,7 +41,7 @@ void Double_list::d_list ( const d_list& a_list ) : size( a_list.size )
     head->item = a_list.head->item;
     head->prev = NULL;
     head->next = NULL;
-    tail = NULL;
+    tail = head;
     
     /*
      * Now that the first item of the list has been set, we can
@@ -189,8 +190,5 @@ void Double_list::remove ( int index )
     throw list_index_out_of_range_exception(
       "List Index Out of Range Exception: the index you provided is out of range");
   } else {
-    Double_node *cur = head;
-    Double_node *prev = NULL;
-    Double_node *next = NULL;
    
      
