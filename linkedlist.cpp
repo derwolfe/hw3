@@ -11,6 +11,7 @@ using namespace std;
 /* 
  * default constructor that creates a list of no length
  * pointing the head pointer to null
+ * 1. Do you need to make the pointers point to an instance of a list? Yes.
  */
 Double_list::d_list (): 
 {
@@ -107,7 +108,11 @@ int Double_list::get_length () const
   return size;
 }
 
-
+/* 
+ * You could do several things, insert at front, back, or in between
+ * you  will need to write some helper function to provide a form of
+ * fake indexing. This is a list NOT an array
+ */
 bool Double_list::insert ( int index, list_item_type new_item )
 {
   int new_length = get_length() + 1;
@@ -171,6 +176,13 @@ void Double_list::remove ( int index )
 /* 
  * Traverse the doubly linked list to find the item located
  * at the given index, decrement the size counter
+ * ## deleting by item may be much more useful than by index ##
+ * ##especially considering you have no index to speak of, these are linked##
+ * ##items
+ *
+ * Somehow you need to find the node, either by item or index,
+ * repoint the pointers, and deallocate, so if nothing else a tmp_ptr will be needed 
+ * to aim delete.
  */
 {
   if (( index < 1 ) || ( index > new_length )) {
