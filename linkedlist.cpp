@@ -16,9 +16,10 @@ Double_list::d_list ():
 {
   size ( 0 );
   head ( NULL );
+  tail ( NULL );
 }
 
-void Double_list::d_list ( const d_list& a_list ) : size(a_list.size) 
+void Double_list::d_list ( const d_list& a_list ) : size( a_list.size ) 
 {
   if ( a_list.head == NULL ) {
     head = NULL;
@@ -38,6 +39,7 @@ void Double_list::d_list ( const d_list& a_list ) : size(a_list.size)
     head->item = a_list.head->item;
     head->prev = NULL;
     head->next = NULL;
+    tail = NULL;
     
     /*
      * Now that the first item of the list has been set, we can
@@ -166,9 +168,17 @@ bool Double_list::insert ( int index, list_item_type new_item )
 }
 
 void Double_list::remove ( int index )
+/* 
+ * Traverse the doubly linked list to find the item located
+ * at the given index, decrement the size counter
+ */
 {
   if (( index < 1 ) || ( index > new_length )) {
     throw list_index_out_of_range_exception(
       "List Index Out of Range Exception: the index you provided is out of range");
   } else {
-
+    Double_node *cur = head;
+    Double_node *prev = NULL;
+    Double_node *next = NULL;
+   
+     
