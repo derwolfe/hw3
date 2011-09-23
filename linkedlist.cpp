@@ -56,8 +56,8 @@ void Double_list::d_list ( const d_list& a_list ) : size( a_list.size )
     for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
       new_ptr->next = new Double_node;
       assert ( new_ptr->next != NULL );
-      tmp_ptr = new_ptr;
-      new_ptr = new_ptr->next;
+      tmp_ptr       = new_ptr;
+      new_ptr       = new_ptr->next;
       new_ptr->prev = tmp_ptr;
       new_ptr->item = orig_ptr->item;
     }
@@ -68,8 +68,8 @@ void Double_list::d_list ( const d_list& a_list ) : size( a_list.size )
      * list.
      */
     new_ptr->next = NULL;
-    tmp_ptr = NULL;
-    tail = new_ptr;
+    tmp_ptr       = NULL;
+    tail          = new_ptr;
   }
 }
 
@@ -177,18 +177,45 @@ void Double_list::remove ( int index )
 /* 
  * Traverse the doubly linked list to find the item located
  * at the given index, decrement the size counter
- * ## deleting by item may be much more useful than by index ##
- * ##especially considering you have no index to speak of, these are linked##
- * ##items
- *
- * Somehow you need to find the node, either by item or index,
- * repoint the pointers, and deallocate, so if nothing else a tmp_ptr will be needed 
- * to aim delete.
  */
 {
   if (( index < 1 ) || ( index > new_length )) {
     throw list_index_out_of_range_exception(
       "List Index Out of Range Exception: the index you provided is out of range");
   } else {
-   
-     
+    Double_node *target;
+    target = find ( index );
+    /* several cases, remove head, remove somewhere in the middle
+     * and remove tail
+     *
+     * find the node to be deleted, set the pointers
+     * to different nodes, then deallocate
+     * CASE 1 - remove head
+     */
+    if ( index == 0 ) {
+      assert ( head != NULL );
+      head = target->next;
+      delete target;
+      target = NULL;
+      size--;
+      /* 
+       * CASE 2: remove item inside the list
+       */
+    } else if (( index > 0 ) && ( index < size )) {
+      target->prev->next = target->next;
+      target->next->prev = target->prev;
+      delete target;
+      target = NULL;
+      size--;
+    /* 
+     * CASE 3: target is the tail node 
+     */
+    } else {
+      assert ( tail != NULL );
+      tail = target->prev;
+      delete target;
+      target = NULL;
+      size--;
+}
+
+
