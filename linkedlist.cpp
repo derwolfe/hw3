@@ -111,6 +111,27 @@ int Double_list::get_length () const
 }
 
 /* 
+ * finds the list item located at the given index
+ */
+
+Double_list::Double_node *Double_list::find ( int index ) const
+{
+  if (( index < 1 ) || ( index > new_length )) {
+    throw list_index_out_of_range_exception(
+        "List Index Out of Range Exception: the index you provided is out of range");
+  } else {
+    Double_node *target = head;
+    int inc = 1;
+    for ( ; inc <= size; ++inc ) {
+      target = target->next
+    }
+    return target;
+  }
+}
+
+
+
+/* 
  * You could do several things, insert at front, back, or in between
  * you  will need to write some helper function to provide a form of
  * fake indexing. This is a list NOT an array
@@ -186,22 +207,22 @@ void Double_list::remove ( int index )
   } else {
     Double_node *target;
     target = find ( index );
-    /* several cases, remove head, remove somewhere in the middle
-     * and remove tail
-     *
-     * find the node to be deleted, set the pointers
-     * to different nodes, then deallocate
-     * CASE 1 - remove head
-     */
+   /* several cases, remove head, remove somewhere in the middle
+    * and remove tail
+    *
+    * find the node to be deleted, set the pointers
+    * to different nodes, then deallocate
+    * CASE 1 - remove head
+    */
     if ( index == 0 ) {
       assert ( head != NULL );
       head = target->next;
       delete target;
       target = NULL;
       size--;
-      /* 
-       * CASE 2: remove item inside the list
-       */
+    /* 
+     * CASE 2: remove item inside the list
+     */
     } else if (( index > 0 ) && ( index < size )) {
       target->prev->next = target->next;
       target->next->prev = target->prev;
@@ -221,6 +242,8 @@ void Double_list::remove ( int index )
 /* 
  * this should "peek" at the item. I am not sure whether the
  * function should return the item, or be void, and go to os
+ * As programmed now, the function will assign a pointer to the
+ * target data item.
  */
 void Double_list::retrieve ( int index, list_item_type& data_item ) const
 {

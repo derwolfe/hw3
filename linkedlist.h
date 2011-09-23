@@ -55,15 +55,15 @@ class Double_list
      * and prev is a pointer to the next node
      */
     struct Double_node {
-      list_item_type    item;
+      list_item_type  item;
       
       /* 
        * pointers to the previous and next nodes, 
        * this is the distinguishing feature of the doubly
        * linked list
        */
-      Double_node       *prev;
-      Double_node       *next;
+      Double_node   *prev;
+      Double_node   *next;
     };
     
     /* 
@@ -78,6 +78,6 @@ class Double_list
      * however, it could also take extra time implementing
      */
     Double_node   *tail;
-    Double_node   *find( int index ) const;
+    Double_node   *find ( int index ) const;
 };
 
