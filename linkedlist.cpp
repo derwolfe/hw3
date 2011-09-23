@@ -43,14 +43,11 @@ void Double_list::d_list ( const d_list& a_list )
     head->prev = NULL;
     head->next = NULL;
     tail = head;
-
-    
     /*
      * Now that the first item of the list has been set, we can
      * go about copying the rest. new_ptr points to the current
      * head in the list.
      */
-    
     Double_node *new_ptr = head; 
     Double_node *orig_ptr = a_list.head->next;
     Double_node *tmp_ptr;
@@ -141,7 +138,7 @@ Double_list::Double_node *Double_list::find ( list_item_type data_item ) const
     int inc = 0;
     while ( inc <= size ) {
       if ( data_item == target->item ) {
-        return target->item;
+        return target;
       } else {
         target = target->next;
         inc++;
@@ -179,71 +176,6 @@ bool Double_list::item_add ( list_item_type new_item )
   }
 }
 
-///* 
-// * You could do several things, insert at front, back, or in between
-// * you  will need to write some helper function to provide a form of
-// * fake indexing. This is a list NOT an array
-// */
-///*
-//bool Double_list::insert ( int index, list_item_type new_item )
-//{
-//  int new_length = get_length() + 1;
-//  if (( index < 1 ) || ( index > new_length )) {
-//      throw list_index_out_of_range_exception(
-//              "List Index Out of Range Exception: the index you provided is out of range");
-//  } else {
-//    /* 
-//     * Normal execution of the subroutine, initialiases a new_ptr for the NEW
-//     * double node
-//     */
-//    Double_node *new_ptr = new Double_node;
-//    if ( new_ptr == NULL ) {
-//      throw list_exception("No more memory for new node");
-//    } else {
-//      size = new_length;
-//      new_ptr->item = new_item;
-//      /* 
-//       * Insert to the head of the list, set the negative values NULL as they
-//       * are out of bound/
-//       */
-//      if ( index == 0 ) {
-//        new_ptr->next = head;
-//        new_ptr->prev = NULL;
-//        /*
-//         * If the insertion is occuring in a list that isn't empty
-//         * do the following, the following initializes the 2nd element
-//         * in the list
-//         */
-//        if ( head != NULL ) {
-//        /* 
-//         *  based on the order of the dereferences, 
-//         *  (new_ptr->next)->prev sets the next
-//         *  element's 'prev' pointer to the newly minted node
-//         */
-//          new_ptr->next->prev = new_ptr;
-//        }
-//        head = new_ptr;
-//    /* 
-//     * Now we get to see what happens if there are elements
-//     * in the list. cur will point directly to the item located
-//     * behind the index. 
-//     */
-//      } else {
-//        /* three steps, first set new_ptr's next to the current item,
-//         * this way no information is destroyed but a reference is produced
-//         * second, set the next pointer of the item  previously preceding cur
-//         * to point to the new item
-//         * third set curs previous pointer to the new item.
-//         */
-//        Double_node *cur = find ( index );
-//        new_ptr->next = cur;
-//        cur->prev->next = new_ptr;
-//        cur->prev = new_ptr;
-//      }
-//    }
-//  }
-//}
-
 void Double_list::remove ( int index )
 /* 
  * Traverse the doubly linked list to find the item located
@@ -279,7 +211,7 @@ void Double_list::remove ( int index )
       target = NULL;
       size--;
     /* 
-     * CASE 3: target is the tail node 
+     * CASE 3: target is what tail points to 
      */
     } else {
       assert ( tail != NULL );
@@ -288,12 +220,34 @@ void Double_list::remove ( int index )
       target = NULL;
       size--;
 }
+
+void Double_list::remove ( list_item_type& data_item )
+{
+  Double_node *target = find ( data_item );
+  /* CASE 1: this is the first node, pointed at by head
+   */
+  if ( size == 1 ) {
+    target->prev = NULL;
+    target->next = NULL;
+    head = tail;
+    tail = prev;
+    delete target;
+    size = 0;
+  /* CASE 2: if target is first item in list with more than
+   * one item.
+   */
+  } else if (( size > 1 ) && ( head == data_item )) {
+     
+
+    
+
+}
 /* 
  * this should "peek" at the item. I am not sure whether the
  * function should return the item, or be void, and go to os
  * As programmed now, the function will assign a pointer to the
- * target data item.
  */
+
 void Double_list::retrieve ( int index, list_item_type& data_item ) const
 {
   if (( index < 1 ) || ( index > new_length )) {
