@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "linkedlist.h"
+#include "dlinkedlist.h"
 /* 
  * The indexing for this linkedlist implementation will start at ZERO!
  */
@@ -20,8 +20,9 @@ Double_list::d_list ():
   tail = NULL;
 }
 
-void Double_list::d_list ( const d_list& a_list ) : size( a_list.size ) 
+void Double_list::d_list ( const d_list& a_list )
 {
+  size = a_list.size;
   if ( a_list.head == NULL ) {
     head = NULL;
     tail = NULL;
@@ -198,7 +199,7 @@ bool Double_list::insert ( int index, list_item_type new_item )
 void Double_list::remove ( int index )
 /* 
  * Traverse the doubly linked list to find the item located
- * at the given index, decrement the size counter
+ * at the given index, remove the item, decrement the size counter
  */
 {
   if (( index < 1 ) || ( index > new_length )) {
