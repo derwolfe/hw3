@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "dlinkedlist.h"
+#include "linkedlist.h"
 /* 
  * The indexing for this linkedlist implementation will start at ZERO!
  */
@@ -75,16 +75,14 @@ void Double_list::d_list ( const d_list& a_list )
   }
 }
 
-Double_node::~d_list ():
 /* 
- * A list desctructor  
  * this will remove the first element of the loop on EACH 
  * iteration of the loop. Once, the list is empty it will 
- * stop.
+ * stop. How to implement without index???
  */
 void Double_list::~d_list () 
 {
-  while ( !is_empty ) {
+  while ( !is_empty ()) {
     remove ( 0 );
   }    
 }
@@ -129,72 +127,122 @@ Double_list::Double_node *Double_list::find ( int index ) const
     return target;
   }
 }
-
-
-
 /* 
- * You could do several things, insert at front, back, or in between
- * you  will need to write some helper function to provide a form of
- * fake indexing. This is a list NOT an array
+ * this is a variation of the find function, instead of searching by index
+ * it searches for a SPECIFIC item,. thus allowing the user to 
+ * search for bob, without any indexing.
  */
-bool Double_list::insert ( int index, list_item_type new_item )
+Double_list::Double_node *Double_list::find ( list_item_type data_item ) const
 {
-  int new_length = get_length() + 1;
-  if (( index < 1 ) || ( index > new_length )) {
-      throw list_index_out_of_range_exception(
-              "List Index Out of Range Exception: the index you provided is out of range");
+  if ( data_item == NULL ) {
+    return NULL;
   } else {
-    /* 
-     * Normal execution of the subroutine, initialiases a new_ptr for the NEW
-     * double node
-     */
-    Double_node *new_ptr = new Double_node;
-    if ( new_ptr == NULL ) {
-      throw list_exception("No more memory for new node");
-    } else {
-      size = new_length;
-      new_ptr->item = new_item;
-      /* 
-       * Insert to the head of the list, set the negative values NULL as they
-       * are out of bound/
-       */
-      if ( index == 0 ) {
-        new_ptr->next = head;
-        new_ptr->prev = NULL;
-        /*
-         * If the insertion is occuring in a list that isn't empty
-         * do the following, the following initializes the 2nd element
-         * in the list
-         */
-        if ( head != NULL ) {
-        /* 
-         *  based on the order of the dereferences, 
-         *  (new_ptr->next)->prev sets the next
-         *  element's 'prev' pointer to the newly minted node
-         */
-          new_ptr->next->prev = new_ptr;
-        }
-        head = new_ptr;
-    /* 
-     * Now we get to see what happens if there are elements
-     * in the list. cur will point directly to the item located
-     * behind the index. 
-     */
+    Double_node *target = head;
+    int inc = 0;
+    while ( inc <= size ) {
+      if ( data_item == target->item ) {
+        return target->item;
       } else {
-        /* three steps, first set new_ptr's next to the current item,
-         * this way no information is destroyed but a reference is produced
-         * second, set the next pointer of the item  previously preceding cur
-         * to point to the new item
-         * third set curs previous pointer to the new item.
-         */
-        Double_node *cur = find ( index );
-        new_ptr->next = cur;
-        cur->prev->next = new_ptr;
-        cur->prev = new_ptr;
+        target = target->next;
+        inc++;
       }
     }
   }
 }
+
+/* 
+ * item_add - this should be used for UNORDERED lists, such as queues,
+ * where adding to the tail, without indexing won't cause problems. 
+ * The convention will be tail addition.
+ */
+bool Double_list::item_add ( list_item_type new_item )
+{
+  /* Two cases (1) the list is empty, and (2) the list isn't empty
+   * CASE 1
+   */
+  int new_length = get_length() + 1;
+  Double_node *new_ptr = new Double_node; 
+  
+  if ( is_empty ()) {
+    new_ptr->item = new_item;
+    head = new_ptr;
+    tail = new_ptr;
+    new_ptr->prev = head;
+    new_ptr->next = tail;
+  /* 
+   * CASE 2
+   */
+  } else {
+    new_ptr->prev = tail;
+    tail = new_ptr;
+    new_ptr->prev->next = new_ptr;
+  }
+}
+
+///* 
+// * You could do several things, insert at front, back, or in between
+// * you  will need to write some helper function to provide a form of
+// * fake indexing. This is a list NOT an array
+// */
+///*
+//bool Double_list::insert ( int index, list_item_type new_item )
+//{
+//  int new_length = get_length() + 1;
+//  if (( index < 1 ) || ( index > new_length )) {
+//      throw list_index_out_of_range_exception(
+//              "List Index Out of Range Exception: the index you provided is out of range");
+//  } else {
+//    /* 
+//     * Normal execution of the subroutine, initialiases a new_ptr for the NEW
+//     * double node
+//     */
+//    Double_node *new_ptr = new Double_node;
+//    if ( new_ptr == NULL ) {
+//      throw list_exception("No more memory for new node");
+//    } else {
+//      size = new_length;
+//      new_ptr->item = new_item;
+//      /* 
+//       * Insert to the head of the list, set the negative values NULL as they
+//       * are out of bound/
+//       */
+//      if ( index == 0 ) {
+//        new_ptr->next = head;
+//        new_ptr->prev = NULL;
+//        /*
+//         * If the insertion is occuring in a list that isn't empty
+//         * do the following, the following initializes the 2nd element
+//         * in the list
+//         */
+//        if ( head != NULL ) {
+//        /* 
+//         *  based on the order of the dereferences, 
+//         *  (new_ptr->next)->prev sets the next
+//         *  element's 'prev' pointer to the newly minted node
+//         */
+//          new_ptr->next->prev = new_ptr;
+//        }
+//        head = new_ptr;
+//    /* 
+//     * Now we get to see what happens if there are elements
+//     * in the list. cur will point directly to the item located
+//     * behind the index. 
+//     */
+//      } else {
+//        /* three steps, first set new_ptr's next to the current item,
+//         * this way no information is destroyed but a reference is produced
+//         * second, set the next pointer of the item  previously preceding cur
+//         * to point to the new item
+//         * third set curs previous pointer to the new item.
+//         */
+//        Double_node *cur = find ( index );
+//        new_ptr->next = cur;
+//        cur->prev->next = new_ptr;
+//        cur->prev = new_ptr;
+//      }
+//    }
+//  }
+//}
 
 void Double_list::remove ( int index )
 /* 
