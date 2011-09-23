@@ -44,7 +44,7 @@ class Double_list
      * the given index, unless of course you've asked for 
      * an index that's out of bounds
      */
-    list_item_type retrieve ( int index, list_item_type& data_item ) const
+    void retrieve ( int index, list_item_type& data_item ) const
       throw ( list_index_out_of_range_exception );
 
   private:

@@ -15,16 +15,16 @@ using namespace std;
  */
 Double_list::d_list (): 
 {
-  size ( 0 );
-  head ( NULL );
-  tail ( NULL );
+  size = 0;
+  head = NULL;
+  tail = NULL;
 }
 
 void Double_list::d_list ( const d_list& a_list ) : size( a_list.size ) 
 {
   if ( a_list.head == NULL ) {
     head = NULL;
-    tail = NULL
+    tail = NULL;
   }
   /* 
    * checks to see if list is empty, if so, set the head to null
@@ -42,6 +42,7 @@ void Double_list::d_list ( const d_list& a_list ) : size( a_list.size )
     head->prev = NULL;
     head->next = NULL;
     tail = head;
+
     
     /*
      * Now that the first item of the list has been set, we can
@@ -56,8 +57,8 @@ void Double_list::d_list ( const d_list& a_list ) : size( a_list.size )
     for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
       new_ptr->next = new Double_node;
       assert ( new_ptr->next != NULL );
-      tmp_ptr       = new_ptr;
-      new_ptr       = new_ptr->next;
+      tmp_ptr = new_ptr;
+      new_ptr = new_ptr->next;
       new_ptr->prev = tmp_ptr;
       new_ptr->item = orig_ptr->item;
     }
@@ -68,14 +69,14 @@ void Double_list::d_list ( const d_list& a_list ) : size( a_list.size )
      * list.
      */
     new_ptr->next = NULL;
-    tmp_ptr       = NULL;
-    tail          = new_ptr;
+    tmp_ptr = NULL;
+    tail = new_ptr;
   }
 }
 
-Double_node::~d_list ( ):
+Double_node::~d_list ():
 /* 
- * An OBJECT desctructor  
+ * A list desctructor  
  * this will remove the first element of the loop on EACH 
  * iteration of the loop. Once, the list is empty it will 
  * stop.
@@ -217,5 +218,17 @@ void Double_list::remove ( int index )
       target = NULL;
       size--;
 }
-
-
+/* 
+ * this should "peek" at the item. I am not sure whether the
+ * function should return the item, or be void, and go to os
+ */
+void Double_list::retrieve ( int index, list_item_type& data_item ) const
+{
+  if (( index < 1 ) || ( index > new_length )) {
+    throw list_index_out_of_range_exception(
+      "List Index Out of Range Exception: the index you provided is out of range");
+  } else {
+    Double_node *target = find ( index );
+    data_item = target->item;
+  }
+}
