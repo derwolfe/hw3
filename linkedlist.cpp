@@ -80,10 +80,35 @@ void Double_list::d_list ( const d_list& a_list )
 void Double_list::~d_list () 
 {
   while ( !is_empty ()) {
-    remove ( 0 );
-  }    
+    pop ();     
+  }
 }
 
+void Double_list::pop ()
+{
+  /* 3 cases - 
+   * (1) empty list 
+   * (2) one element in list
+   * (3) more than one element in list
+   */
+  if ( is_empty ()) {
+    throw ( empty_list_error ("empty list - no more elements to pop"));
+  } else { 
+    Double_node *target = tail;
+    if (( !is_empty() ) && ( size > 1 )) {
+      tail = tail->prev;
+      delete target;
+      target = NULL;
+      size--;
+    } else if ( size == 1 ) {
+      delete target;
+      tail = NULL;
+      head = NULL;
+      target = NULL;
+      size = 0;
+    }
+  }
+}
 /* 
  * Checks if the list's size = 0 and makes sure that head 
  * and tail are pointing to null. An assert statement
@@ -98,38 +123,18 @@ bool Double_list::is_empty () const
   return false;
 }
 
-/*
- * Accesses the private size variable
- */
+/* Accesses the private size variable */ 
 int Double_list::get_length () const
 {
   return size;
 }
 
 /* 
- * finds the list item located at the given index
- */
-
-Double_list::Double_node *Double_list::find ( int index ) const
-{
-  if (( index < 1 ) || ( index > new_length )) {
-    throw list_index_out_of_range_exception(
-        "List Index Out of Range Exception: the index you provided is out of range");
-  } else {
-    Double_node *target = head;
-    int inc = 0;
-    for ( ; inc <= size; ++inc ) {
-      target = target->next
-    }
-    return target;
-  }
-}
-/* 
  * this is a variation of the find function, instead of searching by index
  * it searches for a SPECIFIC item,. thus allowing the user to 
  * search for bob, without any indexing.
  */
-Double_list::Double_node *Double_list::find ( list_item_type data_item ) const
+Double_list::Double_node *Double_list::find ( list_item_type& data_item ) const
 {
   if ( data_item == NULL ) {
     return NULL;
@@ -177,51 +182,6 @@ bool Double_list::item_add ( list_item_type new_item )
   }
 }
 
-void Double_list::remove ( int index )
-/* 
- * Traverse the doubly linked list to find the item located
- * at the given index, remove the item, decrement the size counter
- */
-{
-  if (( index < 1 ) || ( index > new_length )) {
-    throw list_index_out_of_range_exception(
-      "List Index Out of Range Exception: the index you provided is out of range");
-  } else {
-    Double_node *target;
-    target = find ( index );
-   /* several cases, remove head, remove somewhere in the middle
-    * and remove tail
-    *
-    * find the node to be deleted, set the pointers
-    * to different nodes, then deallocate
-    * CASE 1 - remove head
-    */
-    if ( index == 0 ) {
-      assert ( head != NULL );
-      head = target->next;
-      delete target;
-      target = NULL;
-      size--;
-    /* 
-     * CASE 2: remove item inside the list
-     */
-    } else if (( index > 0 ) && ( index < size )) {
-      target->prev->next = target->next;
-      target->next->prev = target->prev;
-      delete target;
-      target = NULL;
-      size--;
-    /* 
-     * CASE 3: target is what tail points to 
-     */
-    } else {
-      assert ( tail != NULL );
-      tail = target->prev;
-      delete target;
-      target = NULL;
-      size--;
-}
-
 void Double_list::remove ( list_item_type& data_item )
 {
   Double_node *target = find ( data_item );
@@ -234,7 +194,18 @@ void Double_list::remove ( list_item_type& data_item )
     tail = NULL;
     delete target;
     size = 0;
-  /* CASE 2 - if target is first item in list with more than
+   /* CASE 2 - item is located at the tail, the edge case
+   * of the size = 1, where head = node = tail, is 
+   * already handled.
+   */
+ 
+  } else if ( tail == target ) {
+    tail = target->prev;
+    target-prev->next = NULL;
+    delete target;
+    target = NULL;
+    size--;
+  /* CASE 3 - if target is first item in list with more than
    * one item.
    */
   } else if (( size > 1 ) && ( head == target )) {
@@ -243,7 +214,7 @@ void Double_list::remove ( list_item_type& data_item )
     delete target;
     target = NULL;
     size--;
-  /* CASE 3 - the item is somewhere in the middle of the list
+  /* CASE 4 - the item is somewhere in the middle of the list
    * this only requires, finding it, moving several
    * pointers, deleting, decrementing size.
    */
@@ -255,29 +226,11 @@ void Double_list::remove ( list_item_type& data_item )
     target = NULL;
     delete target;
     size--;
-  /* CASE 4 - item is located at the tail, the edge case
-   * of the size = 1, where head = node = tail, is 
-   * already handled.
-   */
-  } else if ( tail == target ) {
-    tail = target->prev;
-    target-prev->next = NULL;
-    delete target;
-    target = NULL;
-}
-/* 
- * this should "peek" at the item. I am not sure whether the
- * function should return the item, or be void, and go to os
- * As programmed now, the function will assign a pointer to the
- */
-
-void Double_list::retrieve ( int index, list_item_type& data_item ) const
-{
-  if (( index < 1 ) || ( index > new_length )) {
-    throw list_index_out_of_range_exception(
-      "List Index Out of Range Exception: the index you provided is out of range");
-  } else {
-    Double_node *target = find ( index );
-    data_item = target->item;
   }
+}
+/* initialize a pointer to the desired item using find */ 
+list_item_type Double_list::get_item ( list_item_type& data_item ) const
+{
+  Double_node *target = find ( data_item );
+  return target->item;
 }
