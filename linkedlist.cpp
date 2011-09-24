@@ -48,15 +48,15 @@ void Double_list::d_list ( const d_list& a_list )
      * go about copying the rest. new_ptr points to the current
      * head in the list.
      */
-    Double_node *new_ptr = head; 
+    Double_node *new_ptr  = head; 
     Double_node *orig_ptr = a_list.head->next;
     Double_node *tmp_ptr;
 
     for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
       new_ptr->next = new Double_node;
       assert ( new_ptr->next != NULL );
-      tmp_ptr = new_ptr;
-      new_ptr = new_ptr->next;
+      tmp_ptr       = new_ptr;
+      new_ptr       = new_ptr->next;
       new_ptr->prev = tmp_ptr;
       new_ptr->item = orig_ptr->item;
     }
@@ -67,8 +67,8 @@ void Double_list::d_list ( const d_list& a_list )
      * list.
      */
     new_ptr->next = NULL;
-    tmp_ptr = NULL;
-    tail = new_ptr;
+    tmp_ptr       = NULL;
+    tail          = new_ptr;
   }
 }
 
@@ -117,7 +117,7 @@ Double_list::Double_node *Double_list::find ( int index ) const
         "List Index Out of Range Exception: the index you provided is out of range");
   } else {
     Double_node *target = head;
-    int inc = 1;
+    int inc = 0;
     for ( ; inc <= size; ++inc ) {
       target = target->next
     }
@@ -155,24 +155,25 @@ Double_list::Double_node *Double_list::find ( list_item_type data_item ) const
 bool Double_list::item_add ( list_item_type new_item )
 {
   /* Two cases (1) the list is empty, and (2) the list isn't empty
-   * CASE 1
+   * CASE 1 - add initial node to the list, populate the item
    */
-  int new_length = get_length() + 1;
-  Double_node *new_ptr = new Double_node; 
+  int new_length        = get_length() + 1;
+  Double_node *new_ptr  = new Double_node; 
+  new_ptr->item         = new_item;
   
   if ( is_empty ()) {
-    new_ptr->item = new_item;
-    head = new_ptr;
-    tail = new_ptr;
-    new_ptr->prev = head;
-    new_ptr->next = tail;
+    head          = new_ptr;
+    tail          = new_ptr;
+    new_ptr->prev = NULL;
+    new_ptr->next = NULL;
   /* 
-   * CASE 2
+   * CASE 2 - add on to the end. The head pointer doesn't
+   * change because of the tail-addition.
    */
   } else {
-    new_ptr->prev = tail;
-    tail = new_ptr;
+    new_ptr->prev       = tail;
     new_ptr->prev->next = new_ptr;
+    tail                = new_ptr;
   }
 }
 
@@ -224,23 +225,45 @@ void Double_list::remove ( int index )
 void Double_list::remove ( list_item_type& data_item )
 {
   Double_node *target = find ( data_item );
-  /* CASE 1: this is the first node, pointed at by head
+  /* CASE 1 - this is the first node, pointed at by head
    */
   if ( size == 1 ) {
     target->prev = NULL;
     target->next = NULL;
-    head = tail;
-    tail = prev;
+    head = NULL;
+    tail = NULL;
     delete target;
     size = 0;
-  /* CASE 2: if target is first item in list with more than
+  /* CASE 2 - if target is first item in list with more than
    * one item.
    */
-  } else if (( size > 1 ) && ( head == data_item )) {
-     
-
-    
-
+  } else if (( size > 1 ) && ( head == target )) {
+    head = target->next;
+    target->next->prev = NULL;
+    delete target;
+    target = NULL;
+    size--;
+  /* CASE 3 - the item is somewhere in the middle of the list
+   * this only requires, finding it, moving several
+   * pointers, deleting, decrementing size.
+   */
+  } else if (( size > 1 ) && 
+      ( head != target ) && 
+      ( tail != target )) {
+    target->prev->next = target->next;
+    target->next->prev = target->prev;
+    target = NULL;
+    delete target;
+    size--;
+  /* CASE 4 - item is located at the tail, the edge case
+   * of the size = 1, where head = node = tail, is 
+   * already handled.
+   */
+  } else if ( tail == target ) {
+    tail = target->prev;
+    target-prev->next = NULL;
+    delete target;
+    target = NULL;
 }
 /* 
  * this should "peek" at the item. I am not sure whether the
