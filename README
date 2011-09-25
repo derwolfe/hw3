@@ -1,6 +1,6 @@
 This is a hospital database that is implemented using doubly linked lists.
 
-My implementation is a bit different than the assignment calls for bceause I have implemented a linkedlist as a class, and will use it multiple times throughout the code. Similar to string268 in the music DB assignment.
+I have implemented a linkedlist as a class, and will use it multiple times throughout the code. Similar to string268 in the music DB assignment. I hope this makes the code easier to follow.
 
 I will try to write some test cases for linkedlist to make sure it actually works.
 
