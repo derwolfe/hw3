@@ -1,3 +1,5 @@
+#include "empty_list_exception.h"
+
 typedef desired-type-of-list-item list_item_type;
 
 class Double_list 
@@ -17,7 +19,7 @@ class Double_list
 
     /* pop function - tail end pop */
     void pop ();
-    
+      throw ( empty_list_exception );
     /* checks if the node is empty */
     bool is_empty () const;
 

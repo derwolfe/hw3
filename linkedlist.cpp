@@ -1,17 +1,14 @@
 #include <stdlib.h>
 #include <cassert>
+#include <iostream>
 
 using namespace std;
 
 #include "linkedlist.h"
-/* 
- * The indexing for this linkedlist implementation will start at ZERO!
- */
  
 /* 
  * default constructor that creates a list of no length
- * pointing the head pointer to null
- * 1. Do you need to make the pointers point to a new instance of a list? Yes.
+ * pointing the head, initializing the head and null pointers
  */
 Double_list::d_list (): 
 {
@@ -92,20 +89,20 @@ void Double_list::pop ()
    * (3) more than one element in list
    */
   if ( is_empty ()) {
-    throw ( empty_list_error ("empty list - no more elements to pop"));
+    throw empty_list_exception ("Empty List Error: no more elements to pop");
   } else { 
     Double_node *target = tail;
     if (( !is_empty() ) && ( size > 1 )) {
-      tail = tail->prev;
+      tail    = tail->prev;
       delete target;
-      target = NULL;
+      target  = NULL;
       size--;
     } else if ( size == 1 ) {
       delete target;
-      tail = NULL;
-      head = NULL;
-      target = NULL;
-      size = 0;
+      tail    = NULL;
+      head    = NULL;
+      target  = NULL;
+      size    = 0;
     }
   }
 }
@@ -166,7 +163,7 @@ bool Double_list::item_add ( list_item_type new_item )
   Double_node *new_ptr  = new Double_node; 
   new_ptr->item         = new_item;
   
-  if ( is_empty ()) {
+  if ( is_empty () ) {
     head          = new_ptr;
     tail          = new_ptr;
     new_ptr->prev = NULL;
@@ -198,7 +195,6 @@ void Double_list::remove ( list_item_type& data_item )
    * of the size = 1, where head = node = tail, is 
    * already handled.
    */
- 
   } else if ( tail == target ) {
     tail = target->prev;
     target-prev->next = NULL;
