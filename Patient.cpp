@@ -1,0 +1,28 @@
+Patient::Patient ( const string &in_first_name,
+    const string &in_last_name,
+    const string &in_age,
+    const string &in_ailment )
+{
+  first_name  = in_first_name;
+  last_name   = in_last_name;
+  age         = in_age;
+  ailment     = in_ailment;
+}
+
+/* overloaded << to print out all patient information
+ */
+friend std::ostream& operator<<( std::ostream &os, Patient &in_patient );
+{
+  os << "   First Name: " << in_patient.first_name  <<  endl;
+  os << "   Last Name:  " << in_patient.last_name   <<  endl;
+  os << "   Age:        " << in_patient.age         <<  endl;
+  os << "   Ailment:    " << in_patient.ailment     <<  endl; 
+  os << endl;
+  return os;
+}
+/* push patient data through output stream
+ */
+void print (std::ostream &os )
+{
+  os << self << endl;
+}
