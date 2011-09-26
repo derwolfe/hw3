@@ -22,7 +22,11 @@ Doctor::Doctor ( const string &doctor_firstname,
 
 void Doctor::add_patient ( Patient &in_patient )
 {
-  patients.item_add( Patient &in_patient )
+  patients.item_add ( Patient &in_patient )
 }
-
-
+/* you somehow have to traverse the list of patients and find
+ * the item, then delete it
+ */
+void Doctor::delete_patient ( string firstname, string lastname )
+{
+  patients.remove ( 
