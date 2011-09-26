@@ -1,6 +1,7 @@
 #include "empty_list_exception.h"
 
-typedef desired-type-of-list-item list_item_type;
+//typedef desired-type-of-list-item list_item_type;
+// THIS IS WRONG - you need a template, not a typedef
 
 class Double_list 
 {

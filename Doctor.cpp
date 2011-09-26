@@ -41,20 +41,8 @@ void Doctor::delete_patient ( string first_name, string lastname )
  */
 //Patient* search_patient ( string first_name, string lastname )
 //{
-//  /* if the patient list is empty, throw an error, otherwise
-//   * access the patient list, access the first data item; the item
-//   * will be a patient object.
-//   */
-//   if ( !patients.is_empty ()) {
-//    throw no_patients_exception ("This doctor has no patients");
-//   /*
-//    */
-//    patients.patient->first_name.compare ( first_name ) && 
-//    patients.patient->last_name.compare ( last_name )
-//    patients.find ( 
-//        }
-//        
 //}
+
 friend ostream& operator<<( ostream &os, Doctor &doctor )
 {
   os << "   First Name: "   << doctor.first_name      << endl;
