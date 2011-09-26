@@ -26,6 +26,8 @@ class Double_list
     /* returns the length */
     int get_length () const;
 
+    Double_list::Double_node *Double_list::find ( list_item_type& data_item ) const
+
     /* adds the item to the end of the list.*/
     void item_add ( int index, list_item_type new_item )
 
