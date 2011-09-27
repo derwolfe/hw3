@@ -104,18 +104,19 @@ int Double_list::get_length () const
   return size;
 }
 
-//* 
-// * this is a variation of the find function, instead of searching by index
-// * it searches for a SPECIFIC item,. thus allowing the user to 
-// * search for bob, without any indexing.
-// */
-Double_list::Double_node *Double_list::find ( list_item_type& data_item ) const
+ /* 
+ * this is a variation of the find function, instead of searching by index
+ * it searches for a SPECIFIC item,. thus allowing the user to 
+ * search for bob, without any indexing.
+ */
+
+Double_node* Double_list::find ( list_item_type data_item ) const
 {
   if ( data_item == NULL ) {
     return NULL;
   } else {
     Double_node *target = head;
-    int inc = 0;
+    int inc = 1;
     while ( inc <= size ) {
       if ( data_item == target->item ) {
         return target;
@@ -227,10 +228,18 @@ void Double_list::pop ()
     }
   }
 }
-
-///* initialize a pointer to the desired item using find */ 
-//list_item_type Double_list::get_item ( list_item_type& data_item ) const
+///* 
+// * goal is to send contents of the node to the output stream
+// */
+//std::ostream& operator<<(std::ostream &os, Double_list::Double_node &in_node)
 //{
-//  Double_node *target = find ( data_item );
-//  return target->item;
+//  os << in_node->item << endl;
+//  os << endl;
 //}
+// TEST function using cout
+void Double_list::print ( )
+{
+  Double_node *new_ptr = tail;
+  cout << "Item:  " << new_ptr->item  << endl;
+}
+  
