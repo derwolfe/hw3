@@ -13,6 +13,7 @@ class Double_list
      * copy constructor needed to be able to make deep copies
      * of objects
      */
+    
     Double_list ( const Double_list& a_list );
     
   /* destructor - basically a tail ended pop */
@@ -24,7 +25,7 @@ class Double_list
     /* returns the length */
     int get_length () const;
 
-    Double_list::Double_node *Double_list::find ( list_item_type& data_item ) const;
+//    Double_node *Double_list::find ( list_item_type& data_item ) const;
 
     /* adds the item to the end of the list.*/
     void item_add ( list_item_type new_item );
@@ -34,12 +35,12 @@ class Double_list
    
     /* pop function - tail end pop */
     void pop ();
-//     // throw ( empty_list_exception );
-//    /*returns a sought item searched by item name, i don't
-//     * think this will work
-//     */
-//    list_item_type get_item ( list_item_type& data_item ) const
-
+    /* returns a sought item searched by item name, i don't
+     * think this will work
+     */
+ //   friend std::ostream& operator<<(std::ostream &os, Double_list::Double_node &in_node);
+    void print ();
+  
   private:
     
     /* 
