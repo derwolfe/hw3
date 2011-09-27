@@ -14,7 +14,9 @@ int main ( )
   list_p->item_add ( 9 );
   list_p->item_add ( 10 );
   list_p->pop ();
-  list_p->find ( 9 );
+  list_p->print ();
+  list_p->retrieve( 7 );
+  cout << "node after 7, should be 9, is it? " << list_p->retrieve(7)->next->item << endl;
 //  list_p->remove ( 9 );
   list_p->item_add ( 1241 );
   cout << "size:    "  << list_p->get_length() << endl;
