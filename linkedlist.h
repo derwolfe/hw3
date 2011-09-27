@@ -1,44 +1,44 @@
-#include "empty_list_exception.h"
+//#include "empty_list_exception.h"
 
-//typedef desired-type-of-list-item list_item_type;
+typedef int list_item_type;
 // THIS IS WRONG - you need a template, not a typedef
 
 class Double_list 
 {
   public:
     /* constructor for empty object */
-    d_list ();
+    Double_list ();
 
     /* 
      * copy constructor needed to be able to make deep copies
      * of objects
      */
-    d_list ( const d_list& a_list );
+    Double_list ( const Double_list& a_list );
     
-    /* destructor - basically a tail ended pop */
-    ~d_list ();
+  /* destructor - basically a tail ended pop */
+    ~Double_list ();
 
-    /* pop function - tail end pop */
-    void pop ();
-      throw ( empty_list_exception );
     /* checks if the node is empty */
     bool is_empty () const;
 
     /* returns the length */
     int get_length () const;
 
-    Double_list::Double_node *Double_list::find ( list_item_type& data_item ) const
+    Double_list::Double_node *Double_list::find ( list_item_type& data_item ) const;
 
     /* adds the item to the end of the list.*/
-    void item_add ( int index, list_item_type new_item )
+    void item_add ( list_item_type new_item );
 
     /* finds then remove the  node */
-    void remove ( list_item_type data_item )
-    
-    /*returns a sought item searched by item name, i don't
-     * think this will work
-     */
-    list_item_type get_item ( list_item_type& data_item ) const
+//    void remove ( list_item_type data_item );
+   
+    /* pop function - tail end pop */
+    void pop ();
+//     // throw ( empty_list_exception );
+//    /*returns a sought item searched by item name, i don't
+//     * think this will work
+//     */
+//    list_item_type get_item ( list_item_type& data_item ) const
 
   private:
     
@@ -66,7 +66,7 @@ class Double_list
     int size;
     Double_node   *head;
     Double_node   *tail;
-    
-    Double_node   *find ( list_item_type data_item ) const
+//    
+    Double_node   *find ( list_item_type data_item ) const;
 };
 
