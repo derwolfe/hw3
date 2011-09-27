@@ -33,8 +33,7 @@ Double_list::Double_list ( )
 //  } else {
 //    /* 
 //     * this copies the head item and only the head item, so it 
-//     * needs to set the head to itself, tail to itself, prev to null
-//     * and next to null
+//     * points head and tail 
 //     */
 //    head = new Double_node;
 //    assert ( head != NULL );
@@ -52,12 +51,12 @@ Double_list::Double_list ( )
 //    Double_node *tmp_ptr;
 //
 //    for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
-//      new_ptr->next = new Double_node;
+//      new_ptr->next           = new Double_node;
 //      assert ( new_ptr->next != NULL );
-//      tmp_ptr       = new_ptr;
-//      new_ptr       = new_ptr->next;
-//      new_ptr->prev = tmp_ptr;
-//      new_ptr->item = orig_ptr->item;
+//      tmp_ptr                 = new_ptr;
+//      new_ptr                 = new_ptr->next;
+//      new_ptr->prev           = tmp_ptr;
+//      new_ptr->item           = orig_ptr->item;
 //    }
 //    /* 
 //     * now that the loop has finished, the last element's 
@@ -70,12 +69,12 @@ Double_list::Double_list ( )
 //    tail          = new_ptr;
 //  }
 //}
-//
-///* 
-// * this will remove the first element of the loop on EACH 
-// * iteration of the loop. Once, the list is empty it will 
-// * stop. How to implement without index???
-// */
+
+/* 
+ * this will remove the first element of the loop on EACH 
+ * iteration of the loop. Once, the list is empty it will 
+ * stop. How to implement without index???
+ */
 //void Double_list::~Double_list () 
 //{
 //  while ( !is_empty ()) {
@@ -133,10 +132,10 @@ void Double_list::item_add ( list_item_type new_item )
   }
   size++;
 }
-
 void Double_list::remove ( list_item_type data_item )
 {
-  /* you should throw an exception */
+  /* you should throw an exception
+   * find  */
   Double_node *target = find ( data_item );
   if ( target == NULL ) {
     return;
