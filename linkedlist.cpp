@@ -104,35 +104,12 @@ int Double_list::get_length () const
   return size;
 }
 
- /* 
- * this is a variation of the find function, instead of searching by index
- * it searches for a SPECIFIC item,. thus allowing the user to 
- * search for bob, without any indexing.
+
+/* 
+ * item_add - this should be used for UNORDERED lists, such as queues,
+ * where adding to the tail, without indexing won't cause problems. 
+ * The convention will be tail addition.
  */
-
-Double_node* Double_list::find ( list_item_type data_item ) const
-{
-  if ( data_item == NULL ) {
-    return NULL;
-  } else {
-    Double_node *target = head;
-    int inc = 1;
-    while ( inc <= size ) {
-      if ( data_item == target->item ) {
-        return target;
-      } else {
-        target = target->next;
-        inc++;
-      }
-    }
-  }
-}
-
-///* 
-// * item_add - this should be used for UNORDERED lists, such as queues,
-// * where adding to the tail, without indexing won't cause problems. 
-// * The convention will be tail addition.
-// */
 void Double_list::item_add ( list_item_type new_item )
 {
   /* Two cases (1) the list is empty, and (2) the list isn't empty
@@ -157,51 +134,55 @@ void Double_list::item_add ( list_item_type new_item )
   size++;
 }
 
-//void Double_list::remove ( list_item_type& data_item )
-//{
-//  Double_node *target = find ( data_item );
-//  /* CASE 1 - this is the first node, pointed at by head
-//   */
-//  if ( size == 1 ) {
-//    target->prev = NULL;
-//    target->next = NULL;
-//    head = NULL;
-//    tail = NULL;
-//    delete target;
-//    size = 0;
-//   /* CASE 2 - item is located at the tail, the edge case
-//   * of the size = 1, where head = node = tail, is 
-//   * already handled.
-//   */
-//  } else if ( tail == target ) {
-//    tail = target->prev;
-//    target-prev->next = NULL;
-//    delete target;
-//    target = NULL;
-//    size--;
-//  /* CASE 3 - if target is first item in list with more than
-//   * one item.
-//   */
-//  } else if (( size > 1 ) && ( head == target )) {
-//    head = target->next;
-//    target->next->prev = NULL;
-//    delete target;
-//    target = NULL;
-//    size--;
-//  /* CASE 4 - the item is somewhere in the middle of the list
-//   * this only requires, finding it, moving several
-//   * pointers, deleting, decrementing size.
-//   */
-//  } else if (( size > 1 ) && 
-//      ( head != target ) && 
-//      ( tail != target )) {
-//    target->prev->next = target->next;
-//    target->next->prev = target->prev;
-//    target = NULL;
-//    delete target;
-//    size--;
-//  }
-//}
+void Double_list::remove ( list_item_type data_item )
+{
+  /* you should throw an exception */
+  Double_node *target = find ( data_item );
+  if ( target == NULL ) {
+    return;
+  
+  /* CASE 1 - this is the first node, pointed at by head
+   */
+  } else if ( size == 1 ) {
+    target->prev = NULL;
+    target->next = NULL;
+    head = NULL;
+    tail = NULL;
+    delete target;
+    size = 0;
+   /* CASE 2 - item is located at the tail, the edge case
+   * of the size = 1, where head = node = tail, is 
+   * already handled.
+   */
+  } else if ( tail == target ) {
+    tail = target->prev;
+    target-prev->next = NULL;
+    delete target;
+    target = NULL;
+    size--;
+  /* CASE 3 - if target is first item in list with more than
+   * one item.
+   */
+  } else if (( size > 1 ) && ( head == target )) {
+    head = target->next;
+    target->next->prev = NULL;
+    delete target;
+    target = NULL;
+    size--;
+  /* CASE 4 - the item is somewhere in the middle of the list
+   * this only requires, finding it, moving several
+   * pointers, deleting, decrementing size.
+   */
+  } else if (( size > 1 ) && 
+      ( head != target ) && 
+      ( tail != target )) {
+    target->prev->next = target->next;
+    target->next->prev = target->prev;
+    target = NULL;
+    delete target;
+    size--;
+  }
+}
 
 void Double_list::pop ()
 {
@@ -242,4 +223,32 @@ void Double_list::print ( )
   Double_node *new_ptr = tail;
   cout << "Item:  " << new_ptr->item  << endl;
 }
+/* 
+ * PRIVATE find method that should search the list for the data item
+ * once found, it should return a pointer to the node. Now other functions
+ * can use find,
+ */
+Double_node* Double_list::find ( list_item_type data_item ) const
+{
+//  if ( data_item == NULL ) {
+//    return NULL;
   
+//  } else {
+  Double_node *target = head;
+  int inc = 1;
+  while ( inc <= size ) {
+    if ( data_item == target->item ) {
+      return target;
+    } else {
+      target = target->next;
+      inc++;
+    }
+//    }
+  }
+}
+
+Double_node* Double_list::retrieve ( list_item_type data_item ) const
+{
+  return ( find ( data_item ));
+}
+
