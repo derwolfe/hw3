@@ -138,7 +138,7 @@ void Double_list::remove ( list_item_type data_item )
    * find  */
   Double_node *target = find ( data_item );
   if ( target == NULL ) {
-    return;
+    return; 
   
   /* CASE 1 - this is the first node, pointed at by head
    */
@@ -155,7 +155,7 @@ void Double_list::remove ( list_item_type data_item )
    */
   } else if ( tail == target ) {
     tail = target->prev;
-    target-prev->next = NULL;
+    target->prev->next = NULL;
     delete target;
     target = NULL;
     size--;
@@ -235,15 +235,20 @@ Double_node* Double_list::find ( list_item_type data_item ) const
 //  } else {
   Double_node *target = head;
   int inc = 1;
-  while ( inc <= size ) {
-    if ( data_item == target->item ) {
+  /* loop through the items. If the counter is ever greater than size, then 
+   * the item isn't in the list, return a NULL pointer. I could also try throwing
+   * an exception.
+   */
+  while ( inc <= ( size + 1 )) {
+    if ( inc == ( size + 1)) {
+      return NULL;
+    } else if ( data_item == target->item ) {
       return target;
     } else {
       target = target->next;
       inc++;
     }
-//    }
-  }
+  } 
 }
 
 Double_node* Double_list::retrieve ( list_item_type data_item ) const
