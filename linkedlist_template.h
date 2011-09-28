@@ -9,15 +9,17 @@
 using namespace std;
 
 /* 
- * the actual node in the doubly linked list
- * item of Any_type is an item in the list
- * and prev is a pointer to the next node
+ * The types I am intending to use with this container are
+ * the classes:
+ *  - Patient
+ *  - Doctor
  *
- * this is where you could feed in the template for item.
+ *  Deep Copy does not seem to work. Though I don't believe 
+ *  this is called at any point in the assignment.
  */
-template <typename Any_type>
+template <class Any_type>
 struct Double_node {
-  Any_type item;
+  Any_type      item;
   
   /* 
    * pointers to the previous and next nodes, 
@@ -28,7 +30,7 @@ struct Double_node {
   Double_node   *next;
 };
     
-template <typename Any_type>
+template <class Any_type>
 class Double_list 
 {
   public:
@@ -52,10 +54,10 @@ class Double_list
     int get_length () const;
 
     /* adds the item to the end of the list.*/
-    void item_add ( Any_type new_item );
+    void item_add ( Any_type data_item );
 
     /* finds then remove the  node */
-    void remove ( Any_type data_item );
+    void remove ( string first_name, string last_name );
    
     /* pop function - tail end pop */
     void pop ();
@@ -65,7 +67,7 @@ class Double_list
  //   friend std::ostream& operator<<(std::ostream &os, Double_list::Double_node &in_node);
     void print ();
 
-    Double_node *retrieve ( Any_type data_item ) const;
+    Double_node *retrieve ( string first_name, string last_name ) const;
   
   private:
 
@@ -85,7 +87,7 @@ class Double_list
  * default constructor that creates a list of no length
  * pointing the head, initializing the head and null pointers
  */
-template <typename Any_type>
+template <class Any_type>
 Double_list::Double_list ( ) 
 {
   size = 0;
@@ -93,6 +95,7 @@ Double_list::Double_list ( )
   tail = NULL;
 }
 
+template <class Any_type>
 void Double_list::Double_list ( const Double_list& a_list )
 {
   size = a_list.size;
@@ -117,20 +120,20 @@ void Double_list::Double_list ( const Double_list& a_list )
     tail = head;
     /*
      * Now that the first item of the list has been set, we can
-     * go about copying the rest. new_ptr points to the current
+     * go about copying the rest. data_ptr points to the current
      * head in the list.
      */
-    Double_node *new_ptr  = head; 
+    Double_node *data_ptr  = head; 
     Double_node *orig_ptr = a_list.head->next;
     Double_node *tmp_ptr;
 
     for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
-      new_ptr->next           = new Double_node;
-      assert ( new_ptr->next != NULL );
-      tmp_ptr                 = new_ptr;
-      new_ptr                 = new_ptr->next;
-      new_ptr->prev           = tmp_ptr;
-      new_ptr->item           = orig_ptr->item;
+      data_ptr->next           = new Double_node;
+      assert ( data_ptr->next != NULL );
+      tmp_ptr                  = data_ptr;
+      data_ptr                 = data_ptr->next;
+      data_ptr->prev           = tmp_ptr;
+      data_ptr->item           = orig_ptr->item;
     }
     /* 
      * now that the loop has finished, the last element's 
@@ -138,9 +141,9 @@ void Double_list::Double_list ( const Double_list& a_list )
      * the tail pointer should point to the last element on the 
      * list.
      */
-    new_ptr->next = NULL;
+    data_ptr->next = NULL;
     tmp_ptr       = NULL;
-    tail          = new_ptr;
+    tail          = data_ptr;
   }
 }
 
@@ -184,37 +187,37 @@ int Double_list::get_length () const
  * The convention will be tail addition.
  */
 
-template <typename Any_type>
-void Double_list::item_add ( Any_type new_item )
+template <class Any_type>
+void Double_list::item_add ( Any_type data_item )
 {
   /* Two cases (1) the list is empty, and (2) the list isn't empty
    * CASE 1 - add initial node to the list, populate the item
    */
-  Double_node *new_ptr  = new Double_node; 
-  new_ptr->item         = new_item;
+  Double_node *data_ptr  = new Double_node; 
+  data_ptr->item         = data_item;
   if ( size == 0 ) {
-    head          = new_ptr;
-    tail          = new_ptr;
-    new_ptr->prev = NULL;
-    new_ptr->next = NULL;
+    head            = data_ptr;
+    tail            = data_ptr;
+    data_ptr->prev  = NULL;
+    data_ptr->next  = NULL;
   /* 
    * CASE 2 - add on to the end. The head pointer doesn't
    * change because of the tail-addition.
    */
   } else if ( size > 0 ) {
-    new_ptr->prev       = tail;
-    new_ptr->prev->next = new_ptr;
-    tail                = new_ptr;
+    data_ptr->prev        = tail;
+    data_ptr->prev->next  = data_ptr;
+    tail                  = data_ptr;
   }
   size++;
 }
 
-template <typename Any_type>
-void Double_list::remove ( Any_type data_item )
+template <class Any_type>
+void Double_list::remove ( string first_name, string last_name )
 {
   /* you should throw an exception
    * find  */
-  Double_node *target = find ( data_item );
+  Double_node *target = find ( first_name, last_name );
   if ( target == NULL ) {
     return;
   
@@ -233,7 +236,7 @@ void Double_list::remove ( Any_type data_item )
    */
   } else if ( tail == target ) {
     tail = target->prev;
-    target-prev->next = NULL;
+    target->prev->next = NULL;
     delete target;
     target = NULL;
     size--;
@@ -298,8 +301,8 @@ void Double_list::pop ()
 // TEST function using cout
 void Double_list::print ( )
 {
-  Double_node *new_ptr = tail;
-  cout << "Item:  " << new_ptr->item  << endl;
+  Double_node *data_ptr = tail;
+  cout << "Item:  " << data_ptr->item  << endl;
 }
 /* 
  * PRIVATE find method that should search the list for the data item
@@ -307,30 +310,32 @@ void Double_list::print ( )
  * can use find,
  */
 
-template <typename Any_type>
-Double_node* Double_list::find ( Any_type data_item ) const
+template <class Any_type>
+Double_node* Double_list::find ( string first_name, string last_name ) const
 {
-//  if ( data_item == NULL ) {
-//    return NULL;
-  
-//  } else {
   Double_node *target = head;
   int inc = 1;
-  while ( inc <= size ) {
-    if ( data_item == target->item ) {
+  /* loop through the items. If the counter is ever greater than size, then 
+   * the item isn't in the list, return a NULL pointer. I could also try throwing
+   * an exception. the exception should be thrown at the first if loop.
+   */
+  while ( inc <= ( size + 1 )) {
+    if ( inc == ( size + 1)) {
+      return NULL;
+    } else if (( first_name == target->item->first_name ) &&
+       ( last_name == target->item->last_name )) {
       return target;
     } else {
       target = target->next;
       inc++;
     }
-//    }
-  }
+  } 
 }
 
-template <typename Any_type>
-Double_node* Double_list::retrieve ( Any_type data_item ) const
+
+Double_node* Double_list::retrieve ( string first_name, string last_name ) const
 {
-  return ( find ( data_item ));
+  return ( find ( first_name, last_name ));
 }
 
-//#endif
+i//#endif

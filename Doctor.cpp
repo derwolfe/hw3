@@ -5,9 +5,10 @@
 
 using namespace std;
 
-#include "linkedlist.h"
+#include "linkedlist_template.h"
 #include "Doctor.h"
 
+Type
 /* 
  * construct a class of doctor, that has a list of patients
  */
@@ -17,7 +18,7 @@ Doctor::Doctor ( const string &doctor_first_name,
 {
   first_name  = doctor_first_name;
   last_name   = doctor_lastname;
-  patients    = d_list ();
+  patients    = Double_list () ;
 }
 
 void Doctor::add_patient ( Patient &in_patient )
@@ -39,9 +40,10 @@ void Doctor::delete_patient ( string first_name, string lastname )
  * the content is equal. This shoud basically be a MATCH function,
  * matching the input to the data_item.
  */
-//Patient* search_patient ( string first_name, string lastname )
-//{
-//}
+Patient* Doctor::search_patient ( string first_name, string last_name )
+{
+  return ( patients.search ( first_name, last_name ));
+}
 
 friend ostream& operator<<( ostream &os, Doctor &doctor )
 {

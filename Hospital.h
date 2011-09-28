@@ -6,7 +6,8 @@ class Hospital
     void add_patient(string doctor_firstname, 
         string doctor_lastname, 
         Patient *patient);
-    
+    /* search for the Doctor then the patient
+     */    
     void delete_patient(string doctor_firstname, 
         string doctor_lastname, 
         string firstname, 
@@ -21,7 +22,7 @@ class Hospital
     
     void fire_doctor(string doctor_firstname, string doctor_lastname);
     
-    void search_doctor(string doctor_firstname, string doctor_lastname);
+    Doctor*  search_doctor(string doctor_firstname, string doctor_lastname);
 
     friend ostream& operator<<( ostream &os, Hospital &hospital);
 

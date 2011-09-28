@@ -1,0 +1,5 @@
+#! /bin/bash
+
+g++ -c -g linkedlist.cpp test_ll.cpp
+g++ linkedlist.o test_ll.o -o tester
+

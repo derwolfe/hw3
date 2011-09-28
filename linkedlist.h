@@ -2,7 +2,7 @@
 
 typedef int list_item_type;
 // THIS IS WRONG - you need a template, not a typedef
-
+// template <class T>
     
 /* 
  * the actual node in the doubly linked list
@@ -32,7 +32,8 @@ class Double_list
 
     /* 
      * copy constructor needed to be able to make deep copies
-     * of objects
+     * of objects. Should the assignment operator have been overloaded
+     * I cannot figure out how to call this constructor explicitly.
      */
     
     Double_list ( const Double_list& a_list );

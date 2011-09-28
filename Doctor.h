@@ -1,14 +1,14 @@
 class Doctor
 {
   public:
-    Doctor (const string &doctor_firstname,
+    Doctor ( const string &doctor_first_name,
         const string &doctor_lastname );
 
     void add_patient ( Patient &in_patient );
 
-    void delete_patient ( string firstname, string lastname );
+    void delete_patient ( string first_name, string lastname );
 
-    Patient* search_patient ( string firstname, string lastname );
+    Patient* search_patient ( string first_name, string lastname );
     
     friend ostream& operator<<( ostream &os, Doctor &doctor);
 

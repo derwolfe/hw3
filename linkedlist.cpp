@@ -19,74 +19,74 @@ Double_list::Double_list ( )
   tail = NULL;
 }
 
-//void Double_list::Double_list ( const Double_list& a_list )
-//{
-//  size = a_list.size;
-//  if ( a_list.head == NULL ) {
-//    head = NULL;
-//    tail = NULL;
-//  
-//  /* 
-//   * checks to see if list is empty, if so, set the head to null
-//   * and you're finished, otherwise go through the deep copy set
-//   */
-//  } else {
-//    /* 
-//     * this copies the head item and only the head item, so it 
-//     * points head and tail 
-//     */
-//    head = new Double_node;
-//    assert ( head != NULL );
-//    head->item = a_list.head->item;
-//    head->prev = NULL;
-//    head->next = NULL;
-//    tail = head;
-//    /*
-//     * Now that the first item of the list has been set, we can
-//     * go about copying the rest. new_ptr points to the current
-//     * head in the list.
-//     */
-//    Double_node *new_ptr  = head; 
-//    Double_node *orig_ptr = a_list.head->next;
-//    Double_node *tmp_ptr;
-//
-//    for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
-//      new_ptr->next           = new Double_node;
-//      assert ( new_ptr->next != NULL );
-//      tmp_ptr                 = new_ptr;
-//      new_ptr                 = new_ptr->next;
-//      new_ptr->prev           = tmp_ptr;
-//      new_ptr->item           = orig_ptr->item;
-//    }
-//    /* 
-//     * now that the loop has finished, the last element's 
-//     * next pointer needs to point to null
-//     * the tail pointer should point to the last element on the 
-//     * list.
-//     */
-//    new_ptr->next = NULL;
-//    tmp_ptr       = NULL;
-//    tail          = new_ptr;
-//  }
-//}
+Double_list::Double_list ( const Double_list& a_list )
+{
+  size = a_list.size;
+  if ( a_list.head == NULL ) {
+    head = NULL;
+    tail = NULL;
+  
+  /* 
+   * checks to see if list is empty, if so, set the head to null
+   * and you're finished, otherwise go through the deep copy set
+   */
+  } else {
+    /* 
+     * this copies the head item and only the head item, so it 
+     * points head and tail 
+     */
+    head = new Double_node;
+    assert ( head != NULL );
+    head->item = a_list.head->item;
+    head->prev = NULL;
+    head->next = NULL;
+    tail = head;
+    /*
+     * Now that the first item of the list has been set, we can
+     * go about copying the rest. new_ptr points to the current
+     * head in the list.
+     */
+    Double_node *new_ptr  = head; 
+    Double_node *orig_ptr = a_list.head->next;
+    Double_node *tmp_ptr;
+
+    for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
+      new_ptr->next           = new Double_node;
+      assert ( new_ptr->next != NULL );
+      tmp_ptr                 = new_ptr;
+      new_ptr                 = new_ptr->next;
+      new_ptr->prev           = tmp_ptr;
+      new_ptr->item           = orig_ptr->item;
+    }
+    /* 
+     * now that the loop has finished, the last element's 
+     * next pointer needs to point to null
+     * the tail pointer should point to the last element on the 
+     * list.
+     */
+    new_ptr->next = NULL;
+    tmp_ptr       = NULL;
+    tail          = new_ptr;
+  }
+}
 
 /* 
  * this will remove the first element of the loop on EACH 
  * iteration of the loop. Once, the list is empty it will 
  * stop. How to implement without index???
  */
-//void Double_list::~Double_list () 
-//{
-//  while ( !is_empty ()) {
-//    pop ();     
-//  }
-//}
-//
-///* 
-// * Checks if the list's size = 0 and makes sure that head 
-// * and tail are pointing to null. An assert statement
-// * may not be the best way to check that head & tail are set to NULL
-// */
+Double_list::~Double_list () 
+{
+  while ( !is_empty ()) {
+    pop ();     
+  }
+}
+
+/* 
+ * Checks if the list's size = 0 and makes sure that head 
+ * and tail are pointing to null. An assert statement
+ * may not be the best way to check that head & tail are set to NULL
+ */
 bool Double_list::is_empty () const 
 {
   if ( size == 0 ) {
@@ -237,7 +237,7 @@ Double_node* Double_list::find ( list_item_type data_item ) const
   int inc = 1;
   /* loop through the items. If the counter is ever greater than size, then 
    * the item isn't in the list, return a NULL pointer. I could also try throwing
-   * an exception.
+   * an exception. the exception should be thrown at the first if loop.
    */
   while ( inc <= ( size + 1 )) {
     if ( inc == ( size + 1)) {

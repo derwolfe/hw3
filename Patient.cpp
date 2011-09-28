@@ -1,3 +1,11 @@
+#include <stdlib.h>
+#include <stdio>
+#include <fstream>
+
+using namespace std;
+
+#include "Patient.h"
+
 Patient::Patient ( const string &in_first_name,
     const string &in_last_name,
     const string &in_age,
