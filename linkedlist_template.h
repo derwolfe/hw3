@@ -18,9 +18,9 @@ using namespace std;
  *  Deep Copy does not seem to work. Though I don't believe 
  *  this is called at any point in the assignment.
  */
-//template <class Any_type>
+//template <class T>
 struct Double_node {
-  Any_type      item;
+  T      item;
   
   /* 
    * pointers to the previous and next nodes, 
@@ -31,12 +31,12 @@ struct Double_node {
   Double_node   *next;
 };
     
-template <class Any_type>
+template <class T>
 class Double_list 
 {
   public:
     /* constructor for empty object */
-    Double_list <Any_type> ();
+    Double_list ();
 
     /* 
      * copy constructor needed to be able to make deep copies
@@ -55,7 +55,7 @@ class Double_list
     int get_length () const;
 
     /* adds the item to the end of the list.*/
-    void item_add ( Any_type data_item );
+    void item_add ( T data_item );
 
     /* finds then remove the  node */
     void remove ( string first_name, string last_name );
@@ -76,7 +76,7 @@ class Double_list
     int size;
     Double_node   *head;
     Double_node   *tail;
-    Double_node   *find ( Any_type data_item ) const;
+    Double_node   *find ( T data_item ) const;
 };
 
 
@@ -85,16 +85,16 @@ class Double_list
  * default constructor that creates a list of no length
  * pointing the head, initializing the head and null pointers
  */
-template <class Any_type>
-Double_list::Double_list ( ) 
+template <class T>
+Double_list<T>::Double_list <T> ( ) 
 {
   size = 0;
   head = NULL;
   tail = NULL;
 }
 
-template <class Any_type>
-void Double_list::Double_list ( const Double_list& a_list )
+template <class T>
+void Double_list<T>::Double_list ( const Double_list& a_list )
 {
   size = a_list.size;
   if ( a_list.head == NULL ) {
@@ -185,8 +185,8 @@ int Double_list::get_length () const
  * The convention will be tail addition.
  */
 
-template <class Any_type>
-void Double_list::item_add ( Any_type data_item )
+template <class T>
+void Double_list<T>::item_add ( T data_item )
 {
   /* Two cases (1) the list is empty, and (2) the list isn't empty
    * CASE 1 - add initial node to the list, populate the item
@@ -210,8 +210,8 @@ void Double_list::item_add ( Any_type data_item )
   size++;
 }
 
-template <class Any_type>
-void Double_list::remove ( string first_name, string last_name )
+template <class T>
+void Double_list<T>::remove ( string first_name, string last_name )
 {
   /* you should throw an exception
    * find  */
@@ -301,8 +301,8 @@ void Double_list::pop ()
  * can use find,
  */
 
-template <class Any_type>
-Double_node* Double_list::find ( string first_name, string last_name ) const
+template <class T>
+Double_node* Double_list<T>::find ( string first_name, string last_name ) const
 {
   Double_node *target = head;
   int inc = 1;
