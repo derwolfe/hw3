@@ -5,6 +5,7 @@
 #include <cassert>
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ using namespace std;
  *  Deep Copy does not seem to work. Though I don't believe 
  *  this is called at any point in the assignment.
  */
-template <class Any_type>
+//template <class Any_type>
 struct Double_node {
   Any_type      item;
   
@@ -35,7 +36,7 @@ class Double_list
 {
   public:
     /* constructor for empty object */
-    Double_list ();
+    Double_list <Any_type> ();
 
     /* 
      * copy constructor needed to be able to make deep copies
@@ -64,9 +65,6 @@ class Double_list
     /* returns a sought item searched by item name, i don't
      * think this will work
      */
- //   friend std::ostream& operator<<(std::ostream &os, Double_list::Double_node &in_node);
-    void print ();
-
     Double_node *retrieve ( string first_name, string last_name ) const;
   
   private:
@@ -112,7 +110,7 @@ void Double_list::Double_list ( const Double_list& a_list )
      * this copies the head item and only the head item, so it 
      * points head and tail 
      */
-    head = new Double_node;
+    head = new Double_node ();
     assert ( head != NULL );
     head->item = a_list.head->item;
     head->prev = NULL;
@@ -128,7 +126,7 @@ void Double_list::Double_list ( const Double_list& a_list )
     Double_node *tmp_ptr;
 
     for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
-      data_ptr->next           = new Double_node;
+      data_ptr->next           = new Double_node ();
       assert ( data_ptr->next != NULL );
       tmp_ptr                  = data_ptr;
       data_ptr                 = data_ptr->next;
@@ -141,9 +139,9 @@ void Double_list::Double_list ( const Double_list& a_list )
      * the tail pointer should point to the last element on the 
      * list.
      */
-    data_ptr->next = NULL;
-    tmp_ptr       = NULL;
-    tail          = data_ptr;
+    data_ptr->next  = NULL;
+    tmp_ptr         = NULL;
+    tail            = data_ptr;
   }
 }
 
@@ -193,7 +191,7 @@ void Double_list::item_add ( Any_type data_item )
   /* Two cases (1) the list is empty, and (2) the list isn't empty
    * CASE 1 - add initial node to the list, populate the item
    */
-  Double_node *data_ptr  = new Double_node; 
+  Double_node *data_ptr  = new Double_node (); 
   data_ptr->item         = data_item;
   if ( size == 0 ) {
     head            = data_ptr;
@@ -289,21 +287,14 @@ void Double_list::pop ()
     }
   }
 }
-///* 
-// * goal is to send contents of the node to the output stream
-// */
-//std::ostream& operator<<(std::ostream &os, Double_list::Double_node &in_node)
-//{
-//  os << in_node->item << endl;
-//  os << endl;
-//}
+
 
 // TEST function using cout
-void Double_list::print ( )
-{
-  Double_node *data_ptr = tail;
-  cout << "Item:  " << data_ptr->item  << endl;
-}
+//void Double_list::print ( )
+//{
+//  Double_node *data_ptr = tail;
+//  cout << "Item:  " << data_ptr->item  << endl;
+//}
 /* 
  * PRIVATE find method that should search the list for the data item
  * once found, it should return a pointer to the node. Now other functions
@@ -338,4 +329,4 @@ Double_node* Double_list::retrieve ( string first_name, string last_name ) const
   return ( find ( first_name, last_name ));
 }
 
-i//#endif
+//#endif
