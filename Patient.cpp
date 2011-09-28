@@ -21,10 +21,11 @@ Patient::Patient ( const string &in_first_name,
  */
 friend std::ostream& operator<<( std::ostream &os, Patient &in_patient );
 {
-  os << "   First Name: " << in_patient.first_name  <<  endl;
-  os << "   Last Name:  " << in_patient.last_name   <<  endl;
-  os << "   Age:        " << in_patient.age         <<  endl;
-  os << "   Ailment:    " << in_patient.ailment     <<  endl; 
+  os << " Name: " << in_patient.first_name
+    << " " << in_patient.last_name 
+    << ", " << in_patient.age 
+    << " -- " << in_patient.ailment
+    << endl;
   os << endl;
   return os;
 }

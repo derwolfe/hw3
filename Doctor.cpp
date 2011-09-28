@@ -5,8 +5,10 @@
 
 using namespace std;
 
-#include "linkedlist_template.h"
+//#include "linkedlist_template.h"
+//typedef Node_item_type Doctor
 #include "Doctor.h"
+#include "Patient.h"
 
 Type
 /* 
@@ -23,7 +25,7 @@ Doctor::Doctor ( const string &doctor_first_name,
 
 void Doctor::add_patient ( Patient &in_patient )
 {
-  patients.item_add ( Patient &in_patient )
+  patients.item_add ( in_patient )
 }
 /* find the patient node, delete it. You will need to use string 
  * functions to compare the data. You basically need to compare
@@ -47,10 +49,9 @@ Patient* Doctor::search_patient ( string first_name, string last_name )
 
 friend ostream& operator<<( ostream &os, Doctor &doctor )
 {
-  os << "   First Name: "   << doctor.first_name      << endl;
-  os << "   Last Name:  "   << doctor.last_name       << endl;
-  os << " ** Patients ** "                            << endl;
-  os << doctor.patients  << endl;
+  os << " Doctor: " << doctor.first_name << "" << doctor.last_name  << endl;
+  os << "   List of patients:"                                      << endl;
+  os << " --  " << doctor.patients                                  << endl;
   os << endl;
   return os; 
 }
