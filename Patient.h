@@ -2,7 +2,7 @@ class Patient
 {
   public:
     Patient( const string &in_first_name,
-        const string &in_last_name
+        const string &in_last_name,
         const string &in_age,
         const string &in_ailment );
     

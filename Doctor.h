@@ -13,8 +13,8 @@ class Doctor
     friend ostream& operator<<( ostream &os, Doctor &doctor);
 
   private:
-    string    first_name;
-    string    last_name;
-    Patient*  patients;
+    string        first_name;
+    string        last_name;
+    Double_list   patients;
 }
 

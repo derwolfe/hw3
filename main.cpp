@@ -65,14 +65,14 @@ int main(int argc, char* argv[])
         
     switch (command) {
     case HIRE_DOCTOR:
-      /* IMPLEMENT ME */
+       hospital.hire_doctor( doctorFirstname, doctorLastname, patientFirstname, patientLastname );
       break;
     case FIRE_DOCTOR:
-      /* IMPLEMENT ME */
-      break;
+       hospital.fire_doctor( doctorFirstname, doctorLastnam );
+       break;
     case PRINT_DOCTOR:
-      /* IMPLEMENT ME */
-      break;
+           
+       break;
     case ADD_PATIENT:
       /* IMPLEMENT ME */
       break;

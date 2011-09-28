@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -22,9 +23,9 @@ Patient::Patient ( const string &in_first_name,
 friend std::ostream& operator<<( std::ostream &os, Patient &in_patient );
 {
   os << " Name: " << in_patient.first_name
-    << " " << in_patient.last_name 
-    << ", " << in_patient.age 
-    << " -- " << in_patient.ailment
+    << " "        << in_patient.last_name 
+    << ", "       << in_patient.age 
+    << " -- "     << in_patient.ailment
     << endl;
   os << endl;
   return os;

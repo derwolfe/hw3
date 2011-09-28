@@ -18,9 +18,9 @@ using namespace std;
  *  Deep Copy does not seem to work. Though I don't believe 
  *  this is called at any point in the assignment.
  */
-//template <class T>
+template <class T>
 struct Double_node {
-  T      item;
+  T             item;
   
   /* 
    * pointers to the previous and next nodes, 
@@ -86,7 +86,7 @@ class Double_list
  * pointing the head, initializing the head and null pointers
  */
 template <class T>
-Double_list<T>::Double_list <T> ( ) 
+Double_list<T>::Double_list ( ) 
 {
   size = 0;
   head = NULL;
