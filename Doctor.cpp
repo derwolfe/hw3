@@ -2,15 +2,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
-//#include "linkedlist_template.h"
-//typedef Node_item_type Doctor
+#include "linkedlist_template.h"
 #include "Doctor.h"
 #include "Patient.h"
 
-Type
 /* 
  * construct a class of doctor, that has a list of patients
  */
@@ -20,10 +19,10 @@ Doctor::Doctor ( const string &doctor_first_name,
 {
   first_name  = doctor_first_name;
   last_name   = doctor_lastname;
-  patients    = Double_list () ;
+  patients    = Double_list <Patient> () ;
 }
 
-void Doctor::add_patient ( Patient &in_patient )
+void Doctor::add_patien t<Patient>  ( Patient &in_patient )
 {
   patients.item_add ( in_patient )
 }
@@ -33,7 +32,7 @@ void Doctor::add_patient ( Patient &in_patient )
  */
 void Doctor::delete_patient ( string first_name, string lastname )
 {
-  Patient *target = search_patient ( first_name, lastname ); 
+  Patient *target = search_patient <Patient> ( first_name, lastname ); 
   patients.remove ( target );
   target = NULL;
 }
@@ -42,9 +41,9 @@ void Doctor::delete_patient ( string first_name, string lastname )
  * the content is equal. This shoud basically be a MATCH function,
  * matching the input to the data_item.
  */
-Patient* Doctor::search_patient ( string first_name, string last_name )
+Patient* Doctor::search_patient <Patient> ( string first_name, string last_name ) 
 {
-  return ( patients.search ( first_name, last_name ));
+  return ( patients.search <Patient>( first_name, last_name ));
 }
 
 friend ostream& operator<<( ostream &os, Doctor &doctor )
