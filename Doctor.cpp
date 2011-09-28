@@ -19,20 +19,20 @@ Doctor::Doctor ( const string &doctor_first_name,
 {
   first_name  = doctor_first_name;
   last_name   = doctor_lastname;
-  patients    = Double_list () ;
+  patients    = Double_list <Patient> () ;
 }
 
 void Doctor::add_patient  ( Patient &in_patient )
 {
-  patients.item_add ( in_patient )
+  patients.item_add <Patient> ( in_patient )
 }
 /* find the patient node, delete it. You will need to use string 
  * functions to compare the data. You basically need to compare
  * every patient to the data fed in.
  */
-void Doctor::delete_patient ( string first_name, string lastname )
+void Doctor::delete_patient ( string first_name, string last_name )
 {
-  Patient *target = search_patient( first_name, lastname ); 
+  Patient *target = search_patient <Patient> ( first_name, last_name ); 
   patients.remove ( target );
   target = NULL;
 }
@@ -43,7 +43,7 @@ void Doctor::delete_patient ( string first_name, string lastname )
  */
 Patient* Doctor::search_patient( string first_name, string last_name ) 
 {
-  return ( patients.search ( first_name, last_name ));
+  return ( patients.search <Patient> ( first_name, last_name ));
 }
 
 friend ostream& operator<<( ostream &os, Doctor &doctor )
@@ -55,5 +55,8 @@ friend ostream& operator<<( ostream &os, Doctor &doctor )
   return os; 
 }
 
-void Doctor::print (&output
+void Doctor::print ( ostream &os )
+{
+  os << this << endl;
+}
   
