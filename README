@@ -2,3 +2,15 @@ This is a hospital database that is implemented using doubly linked lists.
 
 I have implemented a linkedlist as a class, and will use it multiple times throughout the code. Similar to string268 in the music DB assignment. I hope this makes the code easier to follow.
 
+** My idea did not work, so I decided to try to make a template out of it. I was unable to get the template to compile. But, my test runs of the linkedlist.cpp/h ran successfully, as evinved by the mk_test file.
+
+I understand the spirit of the assignment was to implement a linked list several times, within the class. I also believe I made several mistakes in the main.cpp file in trying to get file input using cmdstr. 
+
+The template was supposed to be first used in the doctor class. I modified the makefile to call it as a dependency. I am not sure if that was the correct implementation. 
+
+Chris
+
+If you would like to look at the changelog type git log.
+
+
+
