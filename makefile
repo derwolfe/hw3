@@ -1,6 +1,6 @@
 # Makefile builds the executable for the linked list assignment by default
 #
-KUID = CHANGE_ME_TO_YOUR_KUID
+KUID = 2054583
 LAB_NAME = linked_list
 
 all: linkedList
@@ -14,7 +14,7 @@ main.o: Hospital.h main.cpp
 Hospital.o: Hospital.cpp Hospital.h Doctor.h
 	g++ -g -c Hospital.cpp
 
-Doctor.o: Doctor.cpp Doctor.h Patient.h
+Doctor.o: Doctor.cpp Doctor.h Patient.h linkedList_template.h
 	g++ -g -c Doctor.cpp
 
 Patient.o: Patient.cpp Patient.h
