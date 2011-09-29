@@ -2,7 +2,3 @@ This is a hospital database that is implemented using doubly linked lists.
 
 I have implemented a linkedlist as a class, and will use it multiple times throughout the code. Similar to string268 in the music DB assignment. I hope this makes the code easier to follow.
 
-I will try to write some test cases for linkedlist to make sure it actually works.
-
-For right now though, I will just assume it works, and write the code for the doct/pat/hospitals.
-

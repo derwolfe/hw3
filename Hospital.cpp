@@ -8,7 +8,6 @@ using namespace std;
 
 #include "Hospital.h"
 #include "Doctor.h"
-#include "Patient.h"
 
 Hospital::Hospital ( const &in_name )
 {

@@ -1,7 +1,6 @@
-#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-#include <fstream>
+#include <ostream>
 #include <string>
 
 using namespace std;
@@ -22,18 +21,19 @@ Doctor::Doctor ( const string &doctor_first_name,
   patients    = Double_list <Patient> () ;
 }
 
-void Doctor::add_patient  ( Patient &in_patient )
+void Doctor::add_patient <Patient>  ( Patient &in_patient )
 {
-  patients.item_add <Patient> ( in_patient )
+  patients.item_add ( in_patient )
 }
 /* find the patient node, delete it. You will need to use string 
  * functions to compare the data. You basically need to compare
  * every patient to the data fed in.
  */
-void Doctor::delete_patient ( string first_name, string last_name )
+void Doctor::delete_patient <Patient> ( string first_name, string last_name )
 {
-  Patient *target = search_patient <Patient> ( first_name, last_name ); 
+  Patient *target = search_patient ( first_name, last_name ); 
   patients.remove ( target );
+  delete target;
   target = NULL;
 }
 
@@ -41,9 +41,9 @@ void Doctor::delete_patient ( string first_name, string last_name )
  * the content is equal. This shoud basically be a MATCH function,
  * matching the input to the data_item.
  */
-Patient* Doctor::search_patient( string first_name, string last_name ) 
+Patient* Doctor::search_patient <Patient> ( string first_name, string last_name ) 
 {
-  return ( patients.search <Patient> ( first_name, last_name ));
+  return ( patients.search ( first_name, last_name ));
 }
 
 friend ostream& operator<<( ostream &os, Doctor &doctor )

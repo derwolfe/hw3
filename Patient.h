@@ -8,8 +8,6 @@ class Patient
     
     friend std::ostream& operator<<( std::ostream &os, Patient &in_patient );
     
-    void print ( std::ostream &os ); 
-
   private:
     string  first_name;
     string  last_name;

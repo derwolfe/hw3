@@ -1,6 +1,5 @@
 #include <stdlib.h>
-#include <stdio>
-#include <fstream>
+#include <ostream>
 #include <string>
 
 using namespace std;
@@ -20,19 +19,13 @@ Patient::Patient ( const string &in_first_name,
 
 /* overloaded << to print out all patient information
  */
-friend std::ostream& operator<<( std::ostream &os, Patient &in_patient );
+friend std::ostream& operator<<( std::ostream &os, Patient &in_patient )
 {
-  os << " Name: " << in_patient.first_name
+  os << "" << in_patient.first_name
     << " "        << in_patient.last_name 
     << ", "       << in_patient.age 
     << " -- "     << in_patient.ailment
     << endl;
   os << endl;
   return os;
-}
-/* push patient data through output stream
- */
-void print (std::ostream &os )
-{
-  os << self << endl;
 }

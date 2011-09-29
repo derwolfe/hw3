@@ -1,7 +1,7 @@
 class Hospital
 {
   public:
-    Hospital ( const string &in_name );
+    Hospital ( const String &in_name );
 
     void add_patient(string doctor_firstname, 
         string doctor_lastname, 
@@ -30,6 +30,6 @@ class Hospital
 
   private:
     string          name;
-    Double_list     doctors;
+    Double_list     *doctors;
 };
 

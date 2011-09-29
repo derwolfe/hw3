@@ -41,11 +41,7 @@ class Double_list
     /* constructor for empty object */
     Double_list ();
 
-    /* 
-     * copy constructor needed to be able to make deep copies
-     * of objects
-     */
-    
+    /* copy constructor needed to be able to make deep copies of objects */
     Double_list ( const Double_list& a_list );
     
     /* destructor - basically a tail ended pop */
@@ -65,10 +61,16 @@ class Double_list
    
     /* pop function - tail end pop */
     void pop ();
-    /* returns a sought item searched by item name, i don't
-     * think this will work
+    /* returns a sought item searched by item name, 
      */
     Double_node *retrieve ( string first_name, string last_name ) const;
+  
+  private:
+
+    int            size;
+    Double_node   *head;
+    Double_node   *tail;
+    Double_node   *find ( string first_name, string last_name ) const;
 };
 /*
  * Implementation of the template
@@ -77,15 +79,15 @@ class Double_list
  * pointing the head, initializing the head and null pointers
  */
 template <class T>
-Double_list<T>::Double_list ( ) 
+Double_list::Double_list () 
 {
   size = 0;
   head = NULL;
   tail = NULL;
 }
 
-//template <class T>
-//void Double_list<T>::Double_list ( const Double_list& a_list )
+template <class T>
+//void Double_list::Double_list ( const Double_list& a_list )
 //{
 //  size = a_list.size;
 //  if ( a_list.head == NULL ) {
@@ -141,6 +143,7 @@ Double_list<T>::Double_list ( )
  * iteration of the loop. Once, the list is empty it will 
  * stop. How to implement without index???
  */
+
 void Double_list::~Double_list () 
 {
   while ( !is_empty ()) {
@@ -177,7 +180,7 @@ int Double_list::get_length () const
  */
 
 template <class T>
-void Double_list<T>::item_add ( T data_item )
+void Double_list::item_add ( T data_item )
 {
   /* Two cases (1) the list is empty, and (2) the list isn't empty
    * CASE 1 - add initial node to the list, populate the item
@@ -202,7 +205,7 @@ void Double_list<T>::item_add ( T data_item )
 }
 
 template <class T>
-void Double_list<T>::remove ( string first_name, string last_name )
+void Double_list::remove ( string first_name, string last_name )
 {
   /* you should throw an exception
    * find  */
@@ -286,7 +289,7 @@ void Double_list::pop ()
  */
 
 template <class T>
-Double_node* Double_list<T>::find ( string first_name, string last_name ) const
+Double_node* Double_list::find ( string first_name, string last_name ) const
 {
   Double_node *target = head;
   int inc = 1;

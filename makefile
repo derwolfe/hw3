@@ -14,7 +14,7 @@ main.o: Hospital.h main.cpp
 Hospital.o: Hospital.cpp Hospital.h Doctor.h
 	g++ -g -c Hospital.cpp
 
-Doctor.o: Doctor.cpp Doctor.h Patient.h linkedList_template.h
+Doctor.o: Doctor.cpp Doctor.h Patient.h linkedlist_template.h
 	g++ -g -c Doctor.cpp
 
 Patient.o: Patient.cpp Patient.h
