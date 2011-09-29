@@ -1,5 +1,5 @@
-//#ifndef linkedlist_template
-//#define linkedlist_template
+#ifndef LINKEDLIST_TEMPLATE_H_
+#define LINKEDLIST_TEMPLATE_H_
 
 #include <stdlib.h>
 #include <cassert>
@@ -19,7 +19,10 @@ using namespace std;
  *  this is called at any point in the assignment.
  */
 template <class T>
-struct Double_node {
+struct Double_node 
+{
+  /* the object contained in the doubly linked list
+   */
   T             item;
   
   /* 
@@ -66,22 +69,10 @@ class Double_list
      * think this will work
      */
     Double_node *retrieve ( string first_name, string last_name ) const;
-  
-  private:
-
-    /* 
-     * the total size of the list
-     * and and a pointer to the node
-     */
-    int size;
-    Double_node   *head;
-    Double_node   *tail;
-    Double_node   *find ( T data_item ) const;
 };
-
-
-
-/* 
+/*
+ * Implementation of the template
+ *
  * default constructor that creates a list of no length
  * pointing the head, initializing the head and null pointers
  */
@@ -93,57 +84,57 @@ Double_list<T>::Double_list ( )
   tail = NULL;
 }
 
-template <class T>
-void Double_list<T>::Double_list ( const Double_list& a_list )
-{
-  size = a_list.size;
-  if ( a_list.head == NULL ) {
-    head = NULL;
-    tail = NULL;
-  
-  /* 
-   * checks to see if list is empty, if so, set the head to null
-   * and you're finished, otherwise go through the deep copy set
-   */
-  } else {
-    /* 
-     * this copies the head item and only the head item, so it 
-     * points head and tail 
-     */
-    head = new Double_node ();
-    assert ( head != NULL );
-    head->item = a_list.head->item;
-    head->prev = NULL;
-    head->next = NULL;
-    tail = head;
-    /*
-     * Now that the first item of the list has been set, we can
-     * go about copying the rest. data_ptr points to the current
-     * head in the list.
-     */
-    Double_node *data_ptr  = head; 
-    Double_node *orig_ptr = a_list.head->next;
-    Double_node *tmp_ptr;
-
-    for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
-      data_ptr->next           = new Double_node ();
-      assert ( data_ptr->next != NULL );
-      tmp_ptr                  = data_ptr;
-      data_ptr                 = data_ptr->next;
-      data_ptr->prev           = tmp_ptr;
-      data_ptr->item           = orig_ptr->item;
-    }
-    /* 
-     * now that the loop has finished, the last element's 
-     * next pointer needs to point to null
-     * the tail pointer should point to the last element on the 
-     * list.
-     */
-    data_ptr->next  = NULL;
-    tmp_ptr         = NULL;
-    tail            = data_ptr;
-  }
-}
+//template <class T>
+//void Double_list<T>::Double_list ( const Double_list& a_list )
+//{
+//  size = a_list.size;
+//  if ( a_list.head == NULL ) {
+//    head = NULL;
+//    tail = NULL;
+//  
+//  /* 
+//   * checks to see if list is empty, if so, set the head to null
+//   * and you're finished, otherwise go through the deep copy set
+//   */
+//  } else {
+//    /* 
+//     * this copies the head item and only the head item, so it 
+//     * points head and tail 
+//     */
+//    head = new Double_node ();
+//    assert ( head != NULL );
+//    head->item = a_list.head->item;
+//    head->prev = NULL;
+//    head->next = NULL;
+//    tail = head;
+//    /*
+//     * Now that the first item of the list has been set, we can
+//     * go about copying the rest. data_ptr points to the current
+//     * head in the list.
+//     */
+//    Double_node *data_ptr  = head; 
+//    Double_node *orig_ptr = a_list.head->next;
+//    Double_node *tmp_ptr;
+//
+//    for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
+//      data_ptr->next           = new Double_node ();
+//      assert ( data_ptr->next != NULL );
+//      tmp_ptr                  = data_ptr;
+//      data_ptr                 = data_ptr->next;
+//      data_ptr->prev           = tmp_ptr;
+//      data_ptr->item           = orig_ptr->item;
+//    }
+//    /* 
+//     * now that the loop has finished, the last element's 
+//     * next pointer needs to point to null
+//     * the tail pointer should point to the last element on the 
+//     * list.
+//     */
+//    data_ptr->next  = NULL;
+//    tmp_ptr         = NULL;
+//    tail            = data_ptr;
+//  }
+//}
 
 /* 
  * this will remove the first element of the loop on EACH 
@@ -289,14 +280,7 @@ void Double_list::pop ()
 }
 
 
-// TEST function using cout
-//void Double_list::print ( )
-//{
-//  Double_node *data_ptr = tail;
-//  cout << "Item:  " << data_ptr->item  << endl;
-//}
-/* 
- * PRIVATE find method that should search the list for the data item
+/* PRIVATE find method that should search the list for the data item
  * once found, it should return a pointer to the node. Now other functions
  * can use find,
  */
@@ -329,4 +313,4 @@ Double_node* Double_list::retrieve ( string first_name, string last_name ) const
   return ( find ( first_name, last_name ));
 }
 
-//#endif
+#endif
