@@ -54,7 +54,8 @@ int main(int argc, char* argv[])
   string doctorFirstname, doctorLastname;
   string patientFirstname, patientLastname, age, ailment;
   Patient *patient;
-    
+  Doctor  *doctor;
+
   ifstream fin(argv[1]);
 		
   Hospital *hospital = new Hospital("KU Hospital");
@@ -62,28 +63,44 @@ int main(int argc, char* argv[])
 
   while (fin >> cmdStr) {
     command = identifyNextCommand(cmdStr); 
-        
+    /* overloaded the >> operator to fill in each of the variables
+     * listed. It should fill in the needed information.
+     *
+     */
     switch (command) {
     case HIRE_DOCTOR:
-       hospital.hire_doctor( doctorFirstname, doctorLastname, patientFirstname, patientLastname );
+      cmdStr >> doctorFirstname >> doctorLastname; 
+      hospital.hire_doctor ( doctorFirstname, doctorLastname );
       break;
     case FIRE_DOCTOR:
-       hospital.fire_doctor( doctorFirstname, doctorLastnam );
-       break;
+      cmdStr >> doctorFirstname >> doctorLastname;
+      hospital.fire_doctor ( doctorFirstname, doctorLastname );
+      break;
     case PRINT_DOCTOR:
-           
-       break;
+      /* find the doctor and print it */
+      cmdStr >> doctorFirstname >> doctorLastname;
+      doctor = hospital.search_doctor ( doctorFirstname, doctorLastname );
+      cout << *doctor << endl; 
+      break;
     case ADD_PATIENT:
-      /* IMPLEMENT ME */
+      cmdStr >> doctorFirstname >> doctorLastname 
+        >> patientFirstname >> patientLastname; 
+      hospital.add_patient ( doctorFirstname, doctorLastname, 
+          patientFirstname, patientLastname );
       break;
     case REMOVE_PATIENT:
-      /* IMPLEMENT ME */
+      cmdStr >> doctorFirstname >> doctorLastname 
+        >> patientFirstname >> patientLastname; 
+      hospital.delete_patient ( doctorFirstname, doctorLastname, 
+          patientFirstname, patientLastname );   
       break;
     case PRINT_PATIENT:
-      /* IMPLEMENT ME */
+      cmdStr >> patientFirstname >> patientLastname;
+      patient = hospital.search_patient (patientFirstname, patientLastname );
+      cout << *patient << endl;
       break;
     case PRINT_HOSPITAL:
-      /* IMPLEMENT ME */
+      cout << *hospital << endl;
       break;
     case INVALID:
       cout << "Error: invalid command" << endl;
@@ -96,3 +113,4 @@ int main(int argc, char* argv[])
 
   exit(0);
 }
+
