@@ -297,12 +297,15 @@ Double_node<T>* Double_list<T>::find ( string first_name, string last_name ) con
   /* loop through the items. If the counter is ever greater than size, then 
    * the item isn't in the list, return a NULL pointer. I could also try throwing
    * an exception. the exception should be thrown at the first if loop.
+   *
+   * Get set routines needed to access these first and last name variables
+   * that or they need to be public
    */
   while ( inc <= ( size + 1 )) {
     if ( inc == ( size + 1)) {
       return NULL;
-    } else if (( first_name == target->item->first_name ) &&
-       ( last_name == target->item->last_name )) {
+    } else if (( first_name == target->item.first_name ) &&
+       ( last_name == target->item.last_name )) {
       return target;
     } else {
       target = target->next;
