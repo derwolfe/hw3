@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <iostream>
 #include <ostream>
 #include <string>
 
@@ -19,7 +19,7 @@ Patient::Patient ( const string &in_first_name,
 
 /* overloaded << to print out all patient information
  */
-friend std::ostream& operator<<( std::ostream &os, Patient &in_patient )
+std::ostream& operator<<( std::ostream &os, Patient &in_patient )
 {
   os << "" << in_patient.first_name
     << " "        << in_patient.last_name 
