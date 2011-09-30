@@ -23,15 +23,15 @@ struct Double_node
 {
   /* the object contained in the doubly linked list
    */
-  T             item;
+  T                 item;
   
   /* 
    * pointers to the previous and next nodes, 
    * this is the distinguishing feature of the doubly
    * linked list
    */
-  Double_node   *prev;
-  Double_node   *next;
+  Double_node<T>   *prev;
+  Double_node<T>   *next;
 };
     
 template <class T>
@@ -54,23 +54,24 @@ class Double_list
     int get_length () const;
 
     /* adds the item to the end of the list.*/
-    void item_add ( T data_item );
+    void item_add ( T& data_item );
 
     /* finds then remove the  node */
-    void remove ( string first_name, string last_name );
+    void remove ( Double_node<T>* target );
    
     /* pop function - tail end pop */
     void pop ();
     /* returns a sought item searched by item name, 
      */
-    Double_node *retrieve ( string first_name, string last_name ) const;
-  
+    Double_node<T> *retrieve ( string first_name, string last_name ) const;
+
+
   private:
 
-    int            size;
-    Double_node   *head;
-    Double_node   *tail;
-    Double_node   *find ( string first_name, string last_name ) const;
+    int             size;
+    Double_node<T>  *head;
+    Double_node<T>  *tail;
+    Double_node<T>  *find ( string first_name, string last_name ) const;
 };
 /*
  * Implementation of the template
@@ -79,7 +80,7 @@ class Double_list
  * pointing the head, initializing the head and null pointers
  */
 template <class T>
-Double_list::Double_list () 
+Double_list<T>::Double_list () 
 {
   size = 0;
   head = NULL;
@@ -87,64 +88,64 @@ Double_list::Double_list ()
 }
 
 template <class T>
-//void Double_list::Double_list ( const Double_list& a_list )
-//{
-//  size = a_list.size;
-//  if ( a_list.head == NULL ) {
-//    head = NULL;
-//    tail = NULL;
-//  
-//  /* 
-//   * checks to see if list is empty, if so, set the head to null
-//   * and you're finished, otherwise go through the deep copy set
-//   */
-//  } else {
-//    /* 
-//     * this copies the head item and only the head item, so it 
-//     * points head and tail 
-//     */
-//    head = new Double_node ();
-//    assert ( head != NULL );
-//    head->item = a_list.head->item;
-//    head->prev = NULL;
-//    head->next = NULL;
-//    tail = head;
-//    /*
-//     * Now that the first item of the list has been set, we can
-//     * go about copying the rest. data_ptr points to the current
-//     * head in the list.
-//     */
-//    Double_node *data_ptr  = head; 
-//    Double_node *orig_ptr = a_list.head->next;
-//    Double_node *tmp_ptr;
-//
-//    for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
-//      data_ptr->next           = new Double_node ();
-//      assert ( data_ptr->next != NULL );
-//      tmp_ptr                  = data_ptr;
-//      data_ptr                 = data_ptr->next;
-//      data_ptr->prev           = tmp_ptr;
-//      data_ptr->item           = orig_ptr->item;
-//    }
-//    /* 
-//     * now that the loop has finished, the last element's 
-//     * next pointer needs to point to null
-//     * the tail pointer should point to the last element on the 
-//     * list.
-//     */
-//    data_ptr->next  = NULL;
-//    tmp_ptr         = NULL;
-//    tail            = data_ptr;
-//  }
-//}
+Double_list<T>::Double_list ( const Double_list<T>& a_list )
+{
+  size = a_list.size;
+  if ( a_list.head == NULL ) {
+    head = NULL;
+    tail = NULL;
+  
+  /* 
+   * checks to see if list is empty, if so, set the head to null
+   * and you're finished, otherwise go through the deep copy set
+   */
+  } else {
+    /* 
+     * this copies the head item and only the head item, so it 
+     * points head and tail 
+     */
+    head = new Double_node<T>();
+    assert ( head != NULL );
+    head->item = a_list.head->item;
+    head->prev = NULL;
+    head->next = NULL;
+    tail = head;
+    /*
+     * Now that the first item of the list has been set, we can
+     * go about copying the rest. data_ptr points to the current
+     * head in the list.
+     */
+    Double_node<T>  *data_ptr = head; 
+    Double_node<T>  *orig_ptr = a_list.head->next;
+    Double_node<T>  *tmp_ptr;
+
+    for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
+      data_ptr->next = new Double_node<T>();
+      assert ( data_ptr->next != NULL );
+      tmp_ptr = data_ptr;
+      data_ptr = data_ptr->next;
+      data_ptr->prev = tmp_ptr;
+      data_ptr->item = orig_ptr->item;
+    }
+    /* 
+     * now that the loop has finished, the last element's 
+     * next pointer needs to point to null
+     * the tail pointer should point to the last element on the 
+     * list.
+     */
+    data_ptr->next = NULL;
+    tmp_ptr = NULL;
+    tail = data_ptr;
+  }
+}
 
 /* 
  * this will remove the first element of the loop on EACH 
  * iteration of the loop. Once, the list is empty it will 
  * stop. How to implement without index???
  */
-
-void Double_list::~Double_list () 
+template <class T>
+Double_list<T>::~Double_list () 
 {
   while ( !is_empty ()) {
     pop ();     
@@ -156,7 +157,8 @@ void Double_list::~Double_list ()
  * and tail are pointing to null. An assert statement
  * may not be the best way to check that head & tail are set to NULL
  */
-bool Double_list::is_empty () const 
+template <class T>
+bool Double_list<T>::is_empty () const 
 {
   if ( size == 0 ) {
     //assert ( head == NULL );
@@ -166,8 +168,9 @@ bool Double_list::is_empty () const
   }
 }
 
-/* Accesses the private size variable */ 
-int Double_list::get_length () const
+/* Accesses the private size variable */
+template <class T>
+int Double_list<T>::get_length () const
 {
   return size;
 }
@@ -180,13 +183,13 @@ int Double_list::get_length () const
  */
 
 template <class T>
-void Double_list::item_add ( T data_item )
+void Double_list<T>::item_add ( T& data_item )
 {
   /* Two cases (1) the list is empty, and (2) the list isn't empty
    * CASE 1 - add initial node to the list, populate the item
    */
-  Double_node *data_ptr  = new Double_node (); 
-  data_ptr->item         = data_item;
+  Double_node<T> *data_ptr = new Double_node<T> (); 
+  data_ptr->item    = data_item;
   if ( size == 0 ) {
     head            = data_ptr;
     tail            = data_ptr;
@@ -205,13 +208,11 @@ void Double_list::item_add ( T data_item )
 }
 
 template <class T>
-void Double_list::remove ( string first_name, string last_name )
-{
-  /* you should throw an exception
-   * find  */
-  Double_node *target = find ( first_name, last_name );
+void Double_list<T>::remove ( Double_node<T> *target )
+{  /* you should throw an exception
+   */
   if ( target == NULL ) {
-    return;
+    return; 
   
   /* CASE 1 - this is the first node, pointed at by head
    */
@@ -255,8 +256,8 @@ void Double_list::remove ( string first_name, string last_name )
     size--;
   }
 }
-
-void Double_list::pop ()
+template <class T>
+void Double_list<T>::pop ()
 {
   /* 3 cases - 
    * (1) empty list 
@@ -266,7 +267,7 @@ void Double_list::pop ()
   if ( is_empty ()) {
     size = 0;
   } else {
-    Double_node *target = tail;
+    Double_node<T> *target = tail;
     if ( size > 1 ) {
       tail    = tail->prev;
       delete target;
@@ -289,9 +290,9 @@ void Double_list::pop ()
  */
 
 template <class T>
-Double_node* Double_list::find ( string first_name, string last_name ) const
+Double_node<T>* Double_list<T>::find ( string first_name, string last_name ) const
 {
-  Double_node *target = head;
+  Double_node<T> *target = head;
   int inc = 1;
   /* loop through the items. If the counter is ever greater than size, then 
    * the item isn't in the list, return a NULL pointer. I could also try throwing
@@ -310,8 +311,8 @@ Double_node* Double_list::find ( string first_name, string last_name ) const
   } 
 }
 
-
-Double_node* Double_list::retrieve ( string first_name, string last_name ) const
+template <class T>
+Double_node<T>* Double_list<T>::retrieve ( string first_name, string last_name ) const
 {
   return ( find ( first_name, last_name ));
 }
