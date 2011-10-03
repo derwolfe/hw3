@@ -17,6 +17,24 @@ Patient::Patient ( const string &in_first_name,
   ailment     = in_ailment;
 }
 
+Patient::Patient ( const Patient &in_patient )
+{
+  first_name = in_patient.first_name;
+  last_name = in_patient.last_name;
+  age = in_patient.age;
+  ailment = in_patient.ailment;
+}
+
+string Patient::get_first_name ()
+{
+  return first_name;
+}
+
+string Patient::get_last_name ()
+{
+  return last_name;
+}
+
 /* overloaded << to print out all patient information
  */
 std::ostream& operator<<( std::ostream &os, Patient &in_patient )
@@ -28,4 +46,9 @@ std::ostream& operator<<( std::ostream &os, Patient &in_patient )
     << endl;
   os << endl;
   return os;
+}
+
+void Patient::print_patient ( std::ostream &os )
+{
+  os << this << endl;
 }
