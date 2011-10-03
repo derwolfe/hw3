@@ -30,8 +30,8 @@ struct Double_node
    * this is the distinguishing feature of the doubly
    * linked list
    */
-  Double_node<T>   *prev;
-  Double_node<T>   *next;
+  Double_node<T>    *prev;
+  Double_node<T>    *next;
 };
     
 template <class T>
@@ -54,7 +54,7 @@ class Double_list
     int get_length () const;
 
     /* adds the item to the end of the list.*/
-    void item_add ( T& data_item );
+    void item_add (const T& data_item );
 
     /* finds then remove the  node */
     void remove ( Double_node<T>* target );
@@ -65,6 +65,7 @@ class Double_list
      */
     Double_node<T> *retrieve ( string first_name, string last_name ) const;
 
+    void print_items ( std::ostream &os );
 
   private:
 
@@ -183,13 +184,14 @@ int Double_list<T>::get_length () const
  */
 
 template <class T>
-void Double_list<T>::item_add ( T& data_item )
+void Double_list<T>::item_add (const T& data_item )
 {
   /* Two cases (1) the list is empty, and (2) the list isn't empty
    * CASE 1 - add initial node to the list, populate the item
    */
-  Double_node<T> *data_ptr = new Double_node<T> (); 
-  data_ptr->item    = data_item;
+  Double_node<T> *data_ptr; 
+  data_ptr = new Double_node<T>;
+  data_ptr->item  = data_item;
   if ( size == 0 ) {
     head            = data_ptr;
     tail            = data_ptr;
@@ -304,8 +306,8 @@ Double_node<T>* Double_list<T>::find ( string first_name, string last_name ) con
   while ( inc <= ( size + 1 )) {
     if ( inc == ( size + 1)) {
       return NULL;
-    } else if (( first_name == target->item.first_name ) &&
-       ( last_name == target->item.last_name )) {
+    } else if (( first_name == target->item.get_first_name() ) &&
+       ( last_name == target->item.get_last_name() )) {
       return target;
     } else {
       target = target->next;
@@ -318,6 +320,28 @@ template <class T>
 Double_node<T>* Double_list<T>::retrieve ( string first_name, string last_name ) const
 {
   return ( find ( first_name, last_name ));
+}
+/* this doesn't work correctly, it isn't accessing what i think it should
+ */
+template <class T>
+void Double_list<T>::print_items ( std::ostream &os )
+{
+  if ( head == NULL ) {
+    os << endl;
+  } 
+  else if ( size == 1 ) {
+    os << head->item << endl;
+  } else {
+
+  Double_node<T> *start = head;
+  /* loop through the nodes until start = tail,
+   * then stop
+   */
+  while ( start->next != NULL ) {
+    os << start->item << endl;
+    start = start->next;
+    }
+  }
 }
 
 #endif
