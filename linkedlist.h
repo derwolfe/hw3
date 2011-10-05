@@ -58,7 +58,8 @@ class Double_list
     /* returns a sought item searched by item name, i don't
      * think this will work
      */
-    friend std::ostream& operator<<(std::ostream &os, Double_list::Double_node &in_node);
+    friend std::ostream& operator<<(std::ostream &os, Double_node &in_node);
+    
     void print ();
 
     Double_node *retrieve ( list_item_type data_item ) const;

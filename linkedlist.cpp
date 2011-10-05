@@ -21,52 +21,23 @@ Double_list::Double_list ( )
 
 Double_list::Double_list ( const Double_list& a_list )
 {
-  size = a_list.size;
   if ( a_list.head == NULL ) {
     head = NULL;
     tail = NULL;
-  
   /* 
    * checks to see if list is empty, if so, set the head to null
    * and you're finished, otherwise go through the deep copy set
    */
   } else {
-    /* 
-     * this copies the head item and only the head item, so it 
-     * points head and tail 
-     */
-    head = new Double_node;
-    assert ( head != NULL );
-    head->item = a_list.head->item;
-    head->prev = NULL;
-    head->next = NULL;
-    tail = head;
-    /*
-     * Now that the first item of the list has been set, we can
-     * go about copying the rest. new_ptr points to the current
-     * head in the list.
-     */
-    Double_node *new_ptr  = head; 
-    Double_node *orig_ptr = a_list.head->next;
-    Double_node *tmp_ptr;
-
-    for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
-      new_ptr->next           = new Double_node;
-      assert ( new_ptr->next != NULL );
-      tmp_ptr                 = new_ptr;
-      new_ptr                 = new_ptr->next;
-      new_ptr->prev           = tmp_ptr;
-      new_ptr->item           = orig_ptr->item;
+    size = 0;
+    cout << "a_list size = " << a_list.size << endl;
+    assert (size == 0 );
+    Double_node *target = a_list.head;
+      while ( target != NULL ) {
+      item_add ( target->item );
+      target = target->next;
+      size++; 
     }
-    /* 
-     * now that the loop has finished, the last element's 
-     * next pointer needs to point to null
-     * the tail pointer should point to the last element on the 
-     * list.
-     */
-    new_ptr->next = NULL;
-    tmp_ptr       = NULL;
-    tail          = new_ptr;
   }
 }
 
@@ -126,9 +97,9 @@ void Double_list::item_add ( list_item_type new_item )
    * change because of the tail-addition.
    */
   } else if ( size > 0 ) {
-    new_ptr->prev       = tail;
-    new_ptr->prev->next = new_ptr;
-    tail                = new_ptr;
+    new_ptr->prev = tail;
+    tail->next    = new_ptr;
+    tail          = new_ptr;
   }
   size++;
 }
@@ -208,19 +179,28 @@ void Double_list::pop ()
     }
   }
 }
-///* 
-// * goal is to send contents of the node to the output stream
-// */
+/* 
+ * goal is to send contents of the node to the output stream
+ */
 //std::ostream& operator<<(std::ostream &os, Double_list::Double_node &in_node)
 //{
 //  os << in_node->item << endl;
 //  os << endl;
 //}
 // TEST function using cout
-void Double_list::print ( )
+void Double_list::print ( )  
+  /* WORKS!!! */
 {
-  Double_node *new_ptr = tail;
-  cout << "Item:  " << new_ptr->item  << endl;
+  /* for node in list,*/ 
+  Double_node *new_ptr = head;
+
+  cout << "List items" << endl;
+  cout << "---------" << endl;
+  while ( new_ptr != NULL ) {
+    cout << new_ptr->item << endl;
+    new_ptr = new_ptr->next;
+  }
+  cout << "---------" << endl;
 }
 /* 
  * PRIVATE find method that should search the list for the data item
@@ -229,15 +209,13 @@ void Double_list::print ( )
  */
 Double_node* Double_list::find ( list_item_type data_item ) const
 {
-//  if ( data_item == NULL ) {
-//    return NULL;
-  
-//  } else {
   Double_node *target = head;
   int inc = 1;
   /* loop through the items. If the counter is ever greater than size, then 
    * the item isn't in the list, return a NULL pointer. I could also try throwing
    * an exception. the exception should be thrown at the first if loop.
+   *
+   * This finds things, but does not work if the item cannot be found.
    */
   while ( inc <= ( size + 1 )) {
     if ( inc == ( size + 1)) {
