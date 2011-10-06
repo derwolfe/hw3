@@ -54,7 +54,7 @@ class Double_list
     int get_length () const;
 
     /* adds the item to the end of the list.*/
-    void item_add (const T& data_item );
+    void item_add ( T data_item );
 
     /* finds then remove the  node */
     void remove ( Double_node<T>* target );
@@ -96,47 +96,15 @@ Double_list<T>::Double_list ( const Double_list<T>& a_list )
     head = NULL;
     tail = NULL;
   
-  /* 
-   * checks to see if list is empty, if so, set the head to null
-   * and you're finished, otherwise go through the deep copy set
-   */
   } else {
-    /* 
-     * this copies the head item and only the head item, so it 
-     * points head and tail 
-     */
-    head = new Double_node<T>();
-    assert ( head != NULL );
-    head->item = a_list.head->item;
-    head->prev = NULL;
-    head->next = NULL;
-    tail = head;
-    /*
-     * Now that the first item of the list has been set, we can
-     * go about copying the rest. data_ptr points to the current
-     * head in the list.
-     */
-    Double_node<T>  *data_ptr = head; 
-    Double_node<T>  *orig_ptr = a_list.head->next;
-    Double_node<T>  *tmp_ptr;
-
-    for ( ; orig_ptr != NULL; orig_ptr = orig_ptr->next ) {
-      data_ptr->next = new Double_node<T>();
-      assert ( data_ptr->next != NULL );
-      tmp_ptr = data_ptr;
-      data_ptr = data_ptr->next;
-      data_ptr->prev = tmp_ptr;
-      data_ptr->item = orig_ptr->item;
+    size = 0;
+    assert (size == 0 );
+    Double_node<T> *target = a_list.head;
+      while ( target != NULL ) {
+      item_add ( target->item );
+      target = target->next;
+      size++; 
     }
-    /* 
-     * now that the loop has finished, the last element's 
-     * next pointer needs to point to null
-     * the tail pointer should point to the last element on the 
-     * list.
-     */
-    data_ptr->next = NULL;
-    tmp_ptr = NULL;
-    tail = data_ptr;
   }
 }
 
@@ -184,13 +152,12 @@ int Double_list<T>::get_length () const
  */
 
 template <class T>
-void Double_list<T>::item_add (const T& data_item )
+void Double_list<T>::item_add ( T data_item )
 {
   /* Two cases (1) the list is empty, and (2) the list isn't empty
    * CASE 1 - add initial node to the list, populate the item
    */
-  Double_node<T> *data_ptr; 
-  data_ptr = new Double_node<T>;
+  Double_node<T> *data_ptr =  new Double_node<T>;
   data_ptr->item  = data_item;
   if ( size == 0 ) {
     head            = data_ptr;
@@ -202,9 +169,9 @@ void Double_list<T>::item_add (const T& data_item )
    * change because of the tail-addition.
    */
   } else if ( size > 0 ) {
-    data_ptr->prev        = tail;
-    data_ptr->prev->next  = data_ptr;
-    tail                  = data_ptr;
+    data_ptr->prev  = tail;
+    tail->next      = data_ptr;
+    tail            = data_ptr;
   }
   size++;
 }
