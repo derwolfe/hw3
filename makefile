@@ -1,6 +1,6 @@
 # Makefile builds the executable for the linked list assignment by default
 #
-KUID = 2054583
+KUID = 
 LAB_NAME = linked_list
 
 all: linkedList
